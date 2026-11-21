@@ -7209,44 +7209,83 @@ function allowedDiscordAvatar(value) {
   } catch { return null; }
 }
 
-/** Supabase può esporre i dati Discord nel profilo oppure nell'identità OAuth. */
+function discordIdentity(user) {
+  return user?.identities?.find(entry => entry.provider === 'discord') || null;
+}
+function discordProviderId(user) {
+  const identity = discordIdentity(user);
+  const identityData = identity?.identity_data || {};
+  const md = user?.user_metadata || {};
+  return [identity?.provider_id, identityData.provider_id, identityData.sub, identityData.id, md.provider_id]
+    .map(value => String(value ?? ''))
+    .find(value => /^[0-9]{15,22}$/.test(value)) || null;
+}
+function avatarFromHash(discordId, hash) {
+  if (!discordId || typeof hash !== 'string' || !/^(?:a_)?[0-9a-f]{16,64}$/i.test(hash)) return null;
+  const extension = hash.startsWith('a_') ? 'gif' : 'png';
+  return `https://cdn.discordapp.com/avatars/${discordId}/${hash}.${extension}?size=128`;
+}
+
+/** Sceglie gli avatar personali, non l'icona Discord /embed/avatars del profilo di default. */
 function profile(user) {
   const md = user?.user_metadata || {};
-  const identity = user?.identities?.find(entry => entry.provider === 'discord');
-  const identityData = identity?.identity_data || {};
+  const identityData = discordIdentity(user)?.identity_data || {};
   const name = String(md.full_name || md.name || md.user_name || md.preferred_username || identityData.full_name || identityData.name || identityData.user_name || 'ALLENATORE').trim().slice(0, 28);
+  const discordId = discordProviderId(user);
   const urls = [];
-  const add = candidate => {
-    const url = allowedDiscordAvatar(candidate);
-    if (url && !urls.includes(url)) urls.push(url);
+  const add = value => {
+    const url = allowedDiscordAvatar(value);
+    if (!url || /\/embed\/avatars\//.test(new URL(url).pathname) || urls.includes(url)) return;
+    urls.push(url);
   };
-  for (const value of [md.avatar_url, md.picture, md.avatarUrl, identityData.avatar_url, identityData.picture, identityData.avatarUrl]) add(value);
-
-  // Se il provider passa solo ID Discord e hash dell'avatar, ricostruiamo l'URL.
-  // user.id è un UUID Supabase: NON è l'ID Discord.
-  const discordId = [identity?.provider_id, identityData.provider_id, identityData.sub, identityData.id, md.provider_id]
-    .find(value => /^[0-9]{15,22}$/.test(String(value || '')));
-  const hash = [identityData.avatar, identityData.avatar_hash, md.avatar, md.avatar_hash]
-    .find(value => typeof value === 'string' && /^[a-zA-Z0-9_]{10,128}$/.test(value));
-  if (discordId && hash) {
-    const extension = hash.startsWith('a_') ? 'gif' : 'png';
-    add(`https://cdn.discordapp.com/avatars/${discordId}/${hash}.${extension}?size=128`);
-  }
-  // Alcuni browser rifiutano il CDN principale: proviamo anche il media CDN Discord.
-  const primary = urls.slice();
-  for (const source of primary) {
+  // I dati dell'identità Discord vengono prima del vecchio metadata Supabase.
+  add(avatarFromHash(discordId, identityData.avatar || identityData.avatar_hash));
+  for (const candidate of [identityData.avatar_url, identityData.picture, identityData.avatarUrl]) add(candidate);
+  add(avatarFromHash(discordId, md.avatar || md.avatar_hash));
+  for (const candidate of [md.avatar_url, md.picture, md.avatarUrl]) add(candidate);
+  for (const source of urls.slice()) {
     const url = new URL(source);
     if (url.hostname === 'cdn.discordapp.com' && url.pathname.startsWith('/avatars/')) {
       url.hostname = 'media.discordapp.net';
       add(url.href);
     }
   }
-  // L'avatar predefinito Discord è utile anche per gli account senza avatar personalizzato.
-  if (discordId) {
-    const index = Number((BigInt(discordId) >> 22n) % 6n);
-    add(`https://cdn.discordapp.com/embed/avatars/${index}.png`);
-  }
+  // Se i dati OAuth non contengono una foto personale, usiamo l'icona locale.
+  // NON facciamo passare una mascotte Discord per la foto del giocatore.
   return { name, avatar: urls[0] || null, avatarFallbacks: urls.slice(1) };
+}
+
+/** Calcola un avatar soltanto se l'API Discord conferma l'identità della sessione. */
+function avatarFromDiscordUser(user, discordUser) {
+  const expectedId = discordProviderId(user);
+  if (!expectedId || String(discordUser?.id || '') !== expectedId) return null;
+  return allowedDiscordAvatar(avatarFromHash(expectedId, discordUser.avatar));
+}
+
+/** Quando disponibile, usa il token OAuth Discord per ottenere la foto corrente.
+ * Non salva e non espone il token. L'assenza del token o il CORS non bloccano il gioco.
+ */
+async function freshDiscordAvatar(user) {
+  if (!client || typeof globalThis.fetch !== 'function') return null;
+  const expectedId = discordProviderId(user);
+  if (!expectedId) return null;
+  try {
+    const { data, error } = await client.auth.getSession();
+    if (error) return null;
+    const token = data?.session?.provider_token;
+    if (typeof token !== 'string' || token.length < 10) return null;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+    try {
+      const response = await fetch('https://discord.com/api/v10/users/@me', {
+        headers: { Authorization: `Bearer ${token}` },
+        credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer',
+        signal: controller.signal,
+      });
+      if (!response.ok) return null;
+      return avatarFromDiscordUser(user, await response.json());
+    } finally { clearTimeout(timeout); }
+  } catch { return null; }
 }
 
 function loadSdk() {
@@ -7316,7 +7355,7 @@ async function saveCloud(snapshot, expectedRevision) {
   return data.revision;
 }
 
-return {enabled,getClient,redirectUrl,profile,setup,signIn,signOut,loadCloud,saveCloud};
+return {enabled,getClient,redirectUrl,profile,avatarFromDiscordUser,freshDiscordAvatar,setup,signIn,signOut,loadCloud,saveCloud};
 })();
 const __m32 = (() => {
 const Dex = __m8;
@@ -7550,17 +7589,11 @@ function bootGame() {
   return game;
 }
 
-function setProfile({ name, avatar, avatarFallbacks = [] }) {
+function setProfile({ name, avatar }) {
   $('trainer-discord-name').textContent = name;
   const img = $('trainer-discord-avatar');
-  const fallback = 'assets/sprites/ui/trainer-avatar-fallback.svg';
-  const candidates = [avatar, ...avatarFallbacks].filter(Boolean);
-  img.referrerPolicy = 'no-referrer';
-  img.onerror = () => {
-    if (candidates.length) img.src = candidates.shift();
-    else { img.onerror = null; img.src = fallback; }
-  };
-  img.src = candidates.shift() || fallback;
+  img.onerror = () => { img.onerror = null; img.src = 'assets/sprites/ui/trainer-avatar-fallback.svg'; };
+  img.src = avatar || 'assets/sprites/ui/trainer-avatar-fallback.svg';
 }
 
 function setLoginStatus(text, details = '') {
@@ -7644,7 +7677,13 @@ async function signedIn(user) {
   Dex.setOwner(user.id);
   Objectives.setOwner(user.id);
   const engine = bootGame();
-  setProfile(Cloud.profile(user));
+  const discordProfile = Cloud.profile(user);
+  setProfile(discordProfile);
+  // La foto in user_metadata può essere vecchia: quando il token OAuth è disponibile,
+  // chiediamo direttamente a Discord quella attuale, senza toccare il login o i salvataggi.
+  void Cloud.freshDiscordAvatar(user).then(avatar => {
+    if (avatar) setProfile({ ...discordProfile, avatar, avatarFallbacks: [discordProfile.avatar, ...discordProfile.avatarFallbacks].filter(Boolean) });
+  });
   $('login-gate').classList.add('hidden');
   Dex.initCloud(Cloud.getClient()).catch(error => console.warn('Pokédex cloud non disponibile:', error));
   Objectives.initCloud(Cloud.getClient()).catch(error => console.warn('Obiettivi cloud non disponibili:', error));
