@@ -1,0 +1,141 @@
+/* Pokéxplorer · base.css — Font, variabili, elementi e classi generiche. */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+.bg-fire {
+  background: radial-gradient(circle, #ff5722 0%, #b71c1c 100%);
+}
+.bg-water {
+  background: radial-gradient(circle, #0288d1 0%, #01579b 100%);
+}
+.bg-grass {
+  background: radial-gradient(circle, #43a047 0%, #1b5e20 100%);
+  border-color: #81c784;
+}
+.grid-icon {
+  image-rendering: pixelated;
+}
+.btn-nav {
+  width: 100%;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: bold;
+  box-shadow: 0 4px 0 #0284c7;
+}
+.btn-nav:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #0284c7;
+}
+body {
+  color: #f8fafc;
+  font-family: "Press Start 2P", monospace;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+  position: relative;
+  isolation: isolate;
+  overflow: auto;
+  background: #091422;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: -32px;
+  z-index: -2;
+  background:
+    linear-gradient(#08152876, #030b1b82),
+    url("../assets/kanto-map.webp") center center/cover no-repeat;
+  filter: blur(11px) saturate(0.95);
+  transform: scale(1.025);
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at center, transparent 18%, #020814b7 100%);
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  body {
+    overflow: auto;
+  }
+}
+@media (max-width: 1279px) {
+  html {
+    height: auto;
+  }
+  body {
+    min-height: 100dvh;
+    overflow-y: auto;
+    align-items: flex-start;
+    padding: 28px 8px 18px;
+  }
+}
+@media (max-width: 620px) {
+  body {
+    padding: 25px 6px 12px;
+  }
+}
+body {
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+@media (max-width: 1279px) {
+  body {
+    justify-content: flex-start;
+  }
+}
+.sr-only {
+  position: absolute;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+:root {
+  color-scheme: dark;
+  --gba-ink: #22344b;
+  --gba-paper: #fff8db;
+  --gba-accent: #3d7397;
+  --gba-border: #72533c;
+  --gba-soft: #e8d8af;
+}
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid #ffdf7d !important;
+  outline-offset: 3px;
+}
+.hidden,
+[hidden] {
+  display: none !important;
+}
+:where(button, [role="button"], input, select):focus-visible {
+  outline: 3px solid #fef08a !important;
+  outline-offset: 3px;
+}
+:where(button, [role="button"]):active:not(:disabled) {
+  filter: brightness(0.92);
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(button, [role="button"]) {
+    transition-duration: 0.01ms !important;
+  }
+}

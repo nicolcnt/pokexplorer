@@ -1,131 +1,194 @@
-/* Bootstrap: require a verified Discord session before constructing the game
-   whenever PUBLIC Supabase configuration is enabled. Unconfigured ZIPs remain
-   a local/offline preview, never a simulated signed-in account. */
-window.addEventListener('DOMContentLoaded', async () => {
-  const gate=document.getElementById('login-gate');
-  const message=document.getElementById('login-gate-status');
-  const technical=document.getElementById('login-gate-error-details');
-  const technicalText=document.getElementById('login-gate-error-code');
-  // Display human-readable status; keep optional diagnostic details outside the main layout.
-  function setLoginStatus(text,details=''){
-    message.textContent=text;
-    if(technical){if(details)technical.classList.remove('hidden');else technical.classList.add('hidden');technical.open=false;}
-    if(technicalText)technicalText.textContent=details;
-  }
-  const login=document.getElementById('login-discord-btn');
-  const guest=document.getElementById('login-guest-btn');
-  const logout=document.getElementById('logout-discord-btn');
-  const auth=window.PokexAuth;
-  let guestSelected=false;
-  function bootGame(){if(!window.game)window.game=new GameEngine();return window.game;}
-  function enterGuestMode(){
-    if(guestSelected)return;
-    guestSelected=true;
-    // Must be set before constructing the engine, or it might see another user's saved run.
-    window.PokexCheckpoints?.setGuestMode(true);
-    window.PokexDex?.setOwner('guest',{guestMode:true});
-    window.PokexObjectives?.setOwner('guest',{guestMode:true});
-    if(guest)guest.disabled=true;
-    const trainer=bootGame();
-    const label=document.getElementById('trainer-discord-name');
-    if(label){label.textContent='UTENTE';}
-    const avatar=document.getElementById('trainer-discord-avatar');
-    if(avatar)avatar.src='assets/sprites/ui/trainer-avatar-fallback.svg';
-    trainer.updateContinueButton();
-    gate.classList.add('hidden');
-  }
-  if(guest)guest.onclick=enterGuestMode;
-  function setProfile(profile){
-    const label=document.getElementById('trainer-discord-name');
-    if(label)label.textContent=profile.name;
-    const avatar=document.getElementById('trainer-discord-avatar');
-    if(avatar){
-      avatar.onerror=()=>{avatar.onerror=null;avatar.src='assets/sprites/ui/trainer-avatar-fallback.svg';};
-      avatar.src=profile.avatar||'assets/sprites/ui/trainer-avatar-fallback.svg';
+// Avvio: carica i dati di gioco, gestisce l'accesso (Discord o Utente) e la
+// sincronizzazione dei salvataggi con il cloud, poi crea il motore.
+import { loadGameData } from './core/data.js';
+import { GameEngine } from './engine.js';
+import { LocalBackgroundMusic } from './systems/music.js';
+import * as Checkpoints from './systems/checkpoints.js';
+import * as Cloud from './systems/cloud.js';
+import * as Dex from './systems/pokedex.js';
+import * as Objectives from './systems/objectives.js';
+import * as Dialogs from './ui/dialogs.js';
+import * as DexUI from './ui/pokedex-ui.js';
+import * as ObjectivesUI from './ui/objectives-ui.js';
+
+const $ = id => document.getElementById(id);
+let game = null;
+function setCheckpointIndicator(text) { const indicator=$('checkpoint-status'); if(indicator) indicator.textContent=text; }
+
+
+function bootGame() {
+  if (game) return game;
+  game = new GameEngine({ music: new LocalBackgroundMusic() });
+  window.game = game; // utile per il debug e i test end-to-end
+  const notDevRun = () => !game.devRun;
+  Dex.setRecordingGuard(notDevRun);
+  Objectives.setRecordingGuard(notDevRun);
+  DexUI.setOpenGuard(() => {
+    const inMenu = !$('main-menu-overlay').classList.contains('hidden');
+    return inMenu || !(game.isLocked || game.battleBusy || game.dialogueResolve || game.pendingItemTarget || game.isRaidActive || game.isBattleVisible());
+  });
+  ObjectivesUI.setChampionListener(() => game.updateChampionChoice());
+  DexUI.init();
+  ObjectivesUI.init();
+  game.renderSidebar();
+  setCheckpointIndicator('NESSUNA RUN IN CORSO');
+  window.addEventListener('pokex:checkpoint', () => {
+    if(game)game._checkpointSource=Cloud.enabled() ? 'LOCALE · CLOUD IN ATTESA' : 'LOCALE';
+    setCheckpointIndicator(Cloud.enabled() ? 'SALVATO IN LOCALE · CLOUD IN ATTESA' : 'SALVATO IN LOCALE');
+  });
+  return game;
+}
+
+function setProfile({ name, avatar }) {
+  $('trainer-discord-name').textContent = name;
+  const img = $('trainer-discord-avatar');
+  img.onerror = () => { img.onerror = null; img.src = 'assets/sprites/ui/trainer-avatar-fallback.svg'; };
+  img.src = avatar || 'assets/sprites/ui/trainer-avatar-fallback.svg';
+}
+
+function setLoginStatus(text, details = '') {
+  $('login-gate-status').textContent = text;
+  const box = $('login-gate-error-details');
+  box.classList.toggle('hidden', !details);
+  box.open = false;
+  $('login-gate-error-code').textContent = details;
+}
+
+function enterGuestMode() {
+  // Prima di creare il motore: la modalità UTENTE non legge mai i salvataggi di altri.
+  Checkpoints.setGuestMode(true);
+  Dex.setOwner('guest', { guestMode: true });
+  Objectives.setOwner('guest', { guestMode: true });
+  const engine = bootGame();
+  setProfile({ name: 'UTENTE', avatar: null });
+  engine.updateContinueButton();
+  setCheckpointIndicator('UTENTE · PROGRESSI TEMPORANEI');
+  $('login-gate').classList.add('hidden');
+}
+
+/** Allinea checkpoint locale e cloud. Restituisce la revisione cloud (o null). */
+async function reconcileCloud() {
+  const remote = await Cloud.loadCloud();
+  const local = Checkpoints.loadRaw();
+  let remoteRun = null;
+  try { remoteRun = remote?.run ? Checkpoints.validate(remote.run) : null; } catch { remoteRun = null; }
+  let upload = Boolean(local && !remoteRun);
+  let source = local ? 'LOCALE' : remoteRun ? 'CLOUD' : 'NESSUNO';
+  if (remoteRun && !local) { Checkpoints.save(remoteRun); source = 'CLOUD'; }
+  else if (remoteRun && local && JSON.stringify(remoteRun) !== JSON.stringify(local)) {
+    if (remoteRun.runId === local.runId) {
+      // Stessa run: una run conclusa non torna mai attiva; altrimenti vince la più recente.
+      const newest = Date.parse(local.createdAt) >= Date.parse(remoteRun.createdAt) ? local : remoteRun;
+      const pick = local.ended ? local : remoteRun.ended ? remoteRun : newest;
+      if (pick === remoteRun) { Checkpoints.save(remoteRun); source='CLOUD'; } else { upload = true; source='LOCALE'; }
+    } else {
+      const useCloud = await Dialogs.confirm({
+        title: 'DUE PARTITE DIVERSE',
+        message: `Su Discord: ${Checkpoints.describe(remoteRun)}. Su questo dispositivo: ${Checkpoints.describe(local)}. Quale vuoi tenere? L’altra verrà sostituita.`,
+        accept: 'USA DISCORD', cancel: 'USA QUESTO DISPOSITIVO',
+      });
+      if (useCloud) { Checkpoints.save(remoteRun);source='CLOUD'; } else { upload = true;source='LOCALE'; }
     }
   }
-  if(!auth?.enabled()){
-    // Offline preview only: not a Discord-authenticated release.
-    window.PokexDex?.setOwner('local');
-    window.PokexObjectives?.setOwner('local');
-    bootGame();
-    const label=document.getElementById('trainer-discord-name');
-    if(label){label.textContent='ALLENATORE LOCALE';}
+  if (remoteRun && local && JSON.stringify(remoteRun) === JSON.stringify(local)) source='LOCALE + CLOUD';
+  return { revision: remote?.revision ?? null, upload, source };
+}
+
+function installCloudSync(initialRevision) {
+  let revision = initialRevision, busy = false, enabled = true, timer = null;
+  const sync = async () => {
+    if (!enabled || busy) return;
+    const saved = Checkpoints.loadRaw();
+    if (!saved) return;
+    busy = true;
+    try { revision = await Cloud.saveCloud(saved, revision); if(game)game._checkpointSource='LOCALE + CLOUD';setCheckpointIndicator('SALVATAGGIO CLOUD SINCRONIZZATO'); }
+    catch (error) {
+      enabled = false;
+      console.warn('Sincronizzazione cloud sospesa (nessuna sovrascrittura):', error);
+      $('save-status').textContent = 'SINCRONIZZAZIONE CLOUD SOSPESA: RICARICA LA PAGINA';
+      $('save-status').dataset.syncError = '1'; $('save-status').classList.remove('hidden');
+      setCheckpointIndicator('CLOUD · ERRORE (RIPROVA DOPO IL RIAVVIO)');
+    } finally { busy = false; }
+  };
+  window.addEventListener('pokex:checkpoint', () => {
+    if (!enabled) return;
+    clearTimeout(timer);
+    // Durante una lotta si salva in locale a ogni turno; il cloud si aggiorna nelle pause.
+    timer = setTimeout(sync, Checkpoints.loadRaw()?.interrupted ? 8000 : 1100);
+  });
+  window.addEventListener('pagehide', () => { if (timer) { clearTimeout(timer); sync(); } });
+  return sync;
+}
+
+async function signedIn(user) {
+  if (typeof user.id !== 'string' || !/^[0-9a-f-]{36}$/i.test(user.id)) throw Error('Invalid Supabase account identifier');
+  Checkpoints.setGuestMode(false);
+  Checkpoints.setUser(user.id);
+  Dex.setOwner(user.id);
+  Objectives.setOwner(user.id);
+  const engine = bootGame();
+  setProfile(Cloud.profile(user));
+  $('login-gate').classList.add('hidden');
+  Dex.initCloud(Cloud.getClient()).catch(error => console.warn('Pokédex cloud non disponibile:', error));
+  Objectives.initCloud(Cloud.getClient()).catch(error => console.warn('Obiettivi cloud non disponibili:', error));
+  const logout = $('logout-discord-btn');
+  logout.classList.remove('hidden');
+  logout.onclick = async () => {
+    if (!await Dialogs.confirm({ title: 'ESCI DA DISCORD?', message: 'I progressi salvati su questo browser restano disponibili.', accept: 'ESCI', cancel: 'ANNULLA' })) return;
+    logout.disabled = true;
+    try { await Cloud.signOut(); window.location.reload(); }
+    catch (error) { logout.disabled = false; Dialogs.alert({ title: 'USCITA NON RIUSCITA', message: String(error.message || error).slice(0, 110) }); }
+  };
+  try {
+    const { revision, upload, source } = await reconcileCloud();
+    engine._checkpointSource=source;
+    const sync = installCloudSync(revision);
+    if (upload) await sync();
+  } catch (error) { console.warn('Ripristino cloud non disponibile', error); }
+  engine.updateContinueButton();
+  if ($('save-status')?.dataset.syncError !== '1') setCheckpointIndicator('CLOUD · CONNESSO');
+  Objectives.importCheckpoint(Checkpoints.load());
+}
+
+async function start() {
+  const gate = $('login-gate'), login = $('login-discord-btn'), guest = $('login-guest-btn');
+  try { await loadGameData(); }
+  catch (error) {
+    $('boot-status').textContent = 'Impossibile caricare i dati di gioco. Ricarica la pagina.';
+    console.error(error);
     return;
   }
-  gate.classList.remove('hidden');login.disabled=true;
-  setLoginStatus('Verifica della sessione Discord…');
-  try{
-    const {user}=await auth.setup();
-    if(guestSelected)return;
-    if(!user){
-      setLoginStatus('Scegli come iniziare la tua avventura.');
-      login.disabled=false;
-      login.onclick=async()=>{
-        login.disabled=true;setLoginStatus('Reindirizzamento a Discord…');
-        try{await auth.signIn();}
-        catch(err){setLoginStatus('Accesso non riuscito. Riprova oppure continua come Utente.',String(err.message||err).slice(0,250));login.disabled=false;}
-      };
-      return;
-    }
-    // Only the authenticated Supabase user ID selects the owner's checkpoint.
-    if(typeof user.id!=='string'||!/^[0-9a-f-]{36}$/i.test(user.id))throw Error('Invalid Supabase account identifier');
-    window.PokexCheckpoints?.setGuestMode?.(false);
-    window.PokexCheckpoints?.setUser(user.id);
-    window.PokexDex?.setOwner(user.id);
-    window.PokexObjectives?.setOwner(user.id);
-    const game=bootGame();
-    setProfile(auth.profile(user));
-    game.updateContinueButton();
-    gate.classList.add('hidden');
-    // This sync is independent of run checkpoints; cloud schema must be migrated.
-    window.PokexDex?.initCloud(auth.client).catch(error=>console.warn('Pokédex cloud unavailable:',error));
-    window.PokexObjectives?.initCloud(auth.client).catch(error=>console.warn('Obiettivi cloud unavailable:',error));
-    if(logout){
-      logout.classList.remove('hidden');
-      logout.onclick=async()=>{
-        if(!await window.PokexDialogs.confirm({title:'ESCI DA DISCORD?',message:'I progressi locali resteranno salvati su questo browser.',accept:'DISCONNETTI',cancel:'ANNULLA'}))return;
-        logout.disabled=true;
-        try{await auth.signOut();window.location.reload();}
-        catch(err){logout.disabled=false;window.PokexDialogs.alert({title:'DISCONNESSIONE NON RIUSCITA',message:String(err.message||err).slice(0,110)});}
-      };
-    }
-    const checkpoint=window.PokexCheckpoints;
-    let revision=null,cloudEnabled=true,busy=false,timer=null;
-    try{
-      const remote=await auth.loadCloud(),local=checkpoint.load();
-      if(remote?.run && !local){checkpoint.save(remote.run);revision=remote.revision;}
-      else if(remote?.run && local){
-        revision=remote.revision;
-        if(JSON.stringify(remote.run)!==JSON.stringify(local)){
-          const useRemote=await window.PokexDialogs.confirm({title:'SALVATAGGI DIFFERENTI',message:'È disponibile una partita Discord diversa da quella locale. Vuoi caricare il salvataggio cloud?',accept:'USA CLOUD',cancel:'NO'});
-          if(useRemote)checkpoint.save(remote.run);
-          else if(!await window.PokexDialogs.confirm({title:'SALVATAGGIO CLOUD',message:'Vuoi sostituire il salvataggio cloud con quello locale? Annullando la sincronizzazione verrà sospesa.',accept:'USA LOCALE',cancel:'NON SINCRONIZZARE'}))cloudEnabled=false;
-        }
-      }
-      game.updateContinueButton();
-      window.PokexObjectives?.importCheckpoint?.(checkpoint.load());
-    }catch(error){cloudEnabled=false;console.warn('Cloud restore unavailable',error);}
-    const sync=async()=>{
-      if(!cloudEnabled||busy)return;
-      const saved=checkpoint.load();if(!saved)return;
-      busy=true;
-      try{revision=await auth.saveCloud(saved,revision);}
-      catch(err){
-        cloudEnabled=false;console.warn('Cloud sync paused, no overwrite:',err);
-        const status=document.getElementById('save-status');
-        if(status)status.textContent='SYNC CLOUD SOSPESA: '+String(err.message||err).slice(0,64);
-      }finally{busy=false;}
-    };
-    window.addEventListener('pokex:checkpoint',()=>{
-      if(!cloudEnabled)return;clearTimeout(timer);timer=setTimeout(sync,1100);
-    });
-    if(cloudEnabled&&checkpoint.load()&&revision===null)await sync();
-  }catch(err){
-    if(guestSelected)return;
-    setLoginStatus('Accesso al servizio non disponibile. Puoi continuare come Utente.',String(err.message||err).slice(0,250));
-    login.disabled=false;
-    login.textContent='RIPROVA CONNESSIONE';
-    login.onclick=()=>window.location.reload();
+  $('boot-status')?.remove();
+  guest.onclick = () => { guest.disabled = true; enterGuestMode(); };
+  if (!Cloud.enabled()) {
+    // Anteprima locale senza account: i progressi restano su questo browser.
+    Dex.setOwner('local'); Objectives.setOwner('local');
+    bootGame();
+    setProfile({ name: 'ALLENATORE LOCALE', avatar: null });
+    return;
   }
-});
+  gate.classList.remove('hidden');
+  login.disabled = true;
+  setLoginStatus('Verifica della sessione Discord…');
+  try {
+    const { user } = await Cloud.setup();
+    if (guest.disabled) return;
+    if (user) { await signedIn(user); return; }
+    setLoginStatus('Scegli come iniziare la tua avventura.');
+    login.disabled = false;
+    login.onclick = async () => {
+      login.disabled = true;
+      setLoginStatus('Reindirizzamento a Discord…');
+      try { await Cloud.signIn(); }
+      catch (error) { setLoginStatus('Accesso non riuscito. Riprova oppure continua come Utente.', String(error.message || error).slice(0, 250)); login.disabled = false; }
+    };
+  } catch (error) {
+    if (guest.disabled) return;
+    setLoginStatus('Accesso non disponibile al momento. Puoi continuare come Utente.', String(error.message || error).slice(0, 250));
+    login.disabled = false;
+    login.textContent = 'RIPROVA CONNESSIONE';
+    login.onclick = () => window.location.reload();
+  }
+}
+
+start();

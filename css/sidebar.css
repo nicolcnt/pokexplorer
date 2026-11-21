@@ -1,0 +1,1184 @@
+/* Pokéxplorer · sidebar.css — Ali laterali: squadra, zaino, radar, Pokédex, medaglie e D-pad. */
+
+.rotom-wing-left,
+.rotom-wing-right {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  border: 6px solid #881337;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+.rotom-wing-left {
+  border-radius: 32px 12px 12px 32px;
+}
+.rotom-wing-right {
+  border-radius: 12px 32px 32px 12px;
+}
+.wing-screen {
+  border: 4px solid #500724;
+  border-radius: 16px;
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+.panel-hdr {
+  font-size: 8px;
+  color: #38bdf8;
+  border-bottom: 2px solid #1e293b;
+  padding-bottom: 6px;
+  text-align: center;
+}
+.team-slot.empty {
+  background: rgba(15, 23, 42, 0.5);
+}
+.team-slot-img {
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6));
+}
+.dpad-container {
+  grid-template-columns: repeat(3, 36px);
+  grid-template-rows: repeat(3, 36px);
+  gap: 4px;
+  justify-content: center;
+}
+.btn-dpad {
+  background: #1e293b;
+  border: 2px solid #334155;
+  border-radius: 6px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.btn-dpad:active {
+  background: #38bdf8;
+  color: #0f172a;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rotom-wing-left,
+  .rotom-wing-right {
+    transition: none !important;
+  }
+}
+#badges-container {
+  flex-wrap: wrap;
+}
+.rotom-wing-right .wing-screen {
+  background: linear-gradient(145deg, #493c2c, #2d372f 34%, #252e2a 77%, #51452d);
+  border-color: #a86c4e;
+}
+.rotom-wing-right .panel-hdr {
+  color: #ffdb8e;
+  border-color: #86744e;
+}
+#bag-list {
+  background: linear-gradient(#d8b989, #ad855d) !important;
+  border: 3px solid #694832;
+  border-radius: 10px;
+  padding: 6px;
+  gap: 5px;
+  box-shadow: inset 0 4px 9px #53332155;
+}
+.bag-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  border: 2px solid #8a5b3e;
+  font-family: inherit;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+.bag-item span {
+  flex: 1;
+  text-align: left;
+}
+.bag-item strong {
+  font-size: 8px;
+}
+.bag-item:disabled {
+  cursor: default;
+}
+.team-slot {
+  overflow: hidden;
+  min-width: 0;
+  width: 100%;
+  border: 2px solid #6b8e93 !important;
+  cursor: pointer;
+  color: #f8fafc;
+}
+.team-slot:disabled {
+  cursor: default;
+}
+.team-slot .slot-top {
+  width: 100%;
+  z-index: 1;
+}
+.team-slot .slot-top span:last-child {
+  color: #ffef9a;
+}
+.team-slot .team-slot-img {
+  margin: 0;
+  z-index: 1;
+}
+.team-slot.fainted {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+.team-slot.type-fire {
+  background:
+    radial-gradient(circle at 25% 105%, #ec5b32bb, transparent 60%), repeating-linear-gradient(65deg, #4b2426 0 8px, #7c3131 9px 11px);
+}
+.team-slot.type-grass {
+  background:
+    radial-gradient(ellipse at 80% 110%, #96c960b0, transparent 68%), repeating-linear-gradient(110deg, #244b39 0 9px, #3e7656 10px 12px);
+}
+.team-slot.type-water {
+  background:
+    radial-gradient(circle at 80% 85%, #75c8f1ac, transparent 70%), repeating-linear-gradient(160deg, #23566c 0 9px, #2c788e 10px 12px);
+}
+.team-slot.type-electric {
+  background: repeating-conic-gradient(from 20deg at 80% 50%, #6b591e 0 15deg, #b0a236 17deg 24deg, #786025 27deg 35deg);
+}
+.team-slot.type-flying {
+  background: repeating-linear-gradient(135deg, #35556d 0 6px, #658ca0 8px 10px, #43647e 12px 15px);
+}
+.team-slot.type-ground,
+.team-slot.type-rock {
+  background: repeating-linear-gradient(130deg, #766447 0 13px, #ab8d5f 14px 16px);
+}
+.team-slot.type-poison,
+.team-slot.type-ghost {
+  background: radial-gradient(circle at 85% 70%, #ac6ad5a0, transparent 75%), #392751;
+}
+.team-slot.type-psychic,
+.team-slot.type-fairy {
+  background: radial-gradient(ellipse, #b960a980, transparent 70%), #562b59;
+}
+.team-slot.type-ice {
+  background: repeating-linear-gradient(155deg, #295a76 0 8px, #82c2d9 10px 13px);
+}
+.team-slot.type-bug {
+  background: repeating-radial-gradient(circle at 80% 80%, #739c50 0 4px, #3e5333 6px 11px);
+}
+.team-slot.type-dragon,
+.team-slot.type-dark {
+  background: radial-gradient(circle, #5f639d, #242b52);
+}
+.team-slot.type-fighting,
+.team-slot.type-normal,
+.team-slot.type-steel {
+  background: linear-gradient(145deg, #5b626e, #303d4b);
+}
+#rotom-container.wings-open .rotom-wing-left,
+#rotom-container.wings-open .rotom-wing-right {
+  pointer-events: auto;
+  opacity: 1;
+}
+@media (min-width: 1260px) {
+  #badges-container {
+    flex-wrap: wrap;
+  }
+}
+#bag-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.25fr;
+  gap: 3px;
+  margin: 5px 0 7px;
+}
+#bag-tabs button {
+  font:
+    8px "Press Start 2P",
+    monospace;
+  border: 2px solid #916f48;
+  background: #ccae7a;
+  color: #463625;
+  border-radius: 7px;
+  padding: 7px 2px;
+  cursor: pointer;
+}
+#bag-tabs button.active {
+  background: #fff1c7;
+  color: #802e21;
+  border-color: #f5ce78;
+  box-shadow: inset 0 2px 0 #fff;
+}
+.bag-item {
+  min-height: 42px !important;
+  font-size: 8px;
+}
+.bag-item img {
+  width: 29px !important;
+  height: 29px !important;
+}
+.team-slot .team-hp-bg {
+  z-index: 1;
+  border: 1px solid #547088;
+}
+.team-slot .team-hp-text {
+  color: #d8edf7;
+}
+.rotom-wing-left .panel-hdr {
+  font-size: 10px;
+}
+.rotom-wing-left .slot-top {
+  font-size: 8px !important;
+  margin-bottom: 4px;
+}
+.rotom-wing-left .team-slot .team-hp-text {
+  text-align: center !important;
+  margin-top: 4px;
+}
+.rotom-wing-left .team-slot.empty {
+  opacity: 0.5;
+}
+.rotom-wing-left,
+.rotom-wing-right {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  z-index: 2;
+  transition:
+    transform 0.65s cubic-bezier(0.17, 0.8, 0.21, 1),
+    opacity 0.4s;
+  width: min(290px, 32vw) !important;
+  height: min(620px, 78vh) !important;
+  box-sizing: border-box;
+}
+#rotom-container.wings-open .rotom-wing-left {
+  transform: translate(calc(-50% - 461px), -50%) rotate(-1deg) !important;
+}
+#rotom-container.wings-open .rotom-wing-right {
+  transform: translate(calc(-50% + 461px), -50%) rotate(1deg) !important;
+}
+.rotom-wing-left .team-slot .team-hp-bg {
+  border-radius: 999px;
+  width: 100%;
+  flex-shrink: 0;
+  background: #1c252c;
+  overflow: hidden;
+}
+.rotom-wing-left .team-slot .team-hp-fill {
+  display: block;
+  height: 100%;
+  transition: width 0.28s linear;
+}
+@media (max-width: 1279px) {
+  .rotom-wing-left,
+  .rotom-wing-right,
+  #rotom-container.wings-open .rotom-wing-left,
+  #rotom-container.wings-open .rotom-wing-right {
+    position: relative;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    flex: 1 1 min(350px, 45%);
+    width: min(350px, 100%) !important;
+    max-width: calc(50% - 6px);
+    height: auto !important;
+    min-height: 390px;
+    max-height: none;
+    margin: 0;
+    z-index: 3;
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform: none !important;
+    transition: none !important;
+  }
+  .rotom-wing-left {
+    order: 1;
+  }
+  .rotom-wing-right {
+    order: 2;
+  }
+  .rotom-wing-left .wing-screen,
+  .rotom-wing-right .wing-screen {
+    overflow: visible;
+  }
+}
+@media (max-width: 620px) {
+  #rotom-container .rotom-wing-left,
+  #rotom-container .rotom-wing-right,
+  #rotom-container.wings-open .rotom-wing-left,
+  #rotom-container.wings-open .rotom-wing-right {
+    flex: 0 0 100%;
+    width: 100% !important;
+    max-width: 100%;
+    min-height: 0;
+    border-radius: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rotom-wing-left .team-slot .team-hp-fill {
+    transition: none;
+  }
+}
+.rotom-wing-left #team-grid.team-grid-2x3 {
+  display: grid !important;
+}
+.rotom-wing-left .team-slot {
+  align-items: stretch;
+  justify-content: flex-start !important;
+  display: grid !important;
+  align-content: center;
+  justify-items: stretch;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+.rotom-wing-left .team-slot .slot-top {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 1.3;
+  gap: 2px;
+}
+.rotom-wing-left .team-slot .slot-top span:first-child {
+  max-width: 74%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rotom-wing-left .team-slot .slot-top span:last-child {
+  white-space: nowrap;
+}
+.rotom-wing-left .team-slot .team-slot-img {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  max-height: none;
+  justify-self: center;
+  align-self: center;
+  object-fit: contain;
+}
+.rotom-wing-left .team-slot .team-hp-bg {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  height: 9px !important;
+  align-self: center;
+}
+.rotom-wing-left .team-slot .team-hp-text {
+  grid-column: 2;
+  grid-row: 3;
+  align-self: center;
+}
+.rotom-wing-left .team-slot.empty .team-hp-bg,
+.rotom-wing-left .team-slot.empty .team-hp-text {
+  display: none;
+}
+.dpad-container .btn-dpad {
+  touch-action: manipulation;
+  min-width: 36px;
+  min-height: 36px;
+  font:
+    12px/1 system-ui,
+    sans-serif;
+}
+.dpad-container .btn-dpad:focus-visible {
+  outline: 3px solid #59d9ff;
+  outline-offset: 2px;
+}
+@media (max-width: 620px) {
+  .dpad-container {
+    grid-template-columns: repeat(3, 42px);
+    grid-template-rows: repeat(3, 42px);
+  }
+  .dpad-container .btn-dpad {
+    min-width: 42px;
+    min-height: 42px;
+  }
+}
+#team-grid .team-slot.item-target-valid {
+  border-color: #f1c96b !important;
+  box-shadow: 0 0 9px #f6ca63 !important;
+  cursor: pointer;
+}
+#team-grid .team-slot.item-target-invalid {
+  opacity: 0.5;
+}
+@media (max-width: 1279px) {
+  .rotom-wing-right .panel-hdr:has(+ .dpad-container) {
+    display: none !important;
+  }
+}
+.rotom-wing-left .wing-screen {
+  background: radial-gradient(ellipse at 49% 40%, #172b3e 0%, #101b30 70%) !important;
+  position: relative;
+}
+.party-action-menu {
+  display: grid;
+  gap: 6px;
+}
+.party-action-menu.hidden {
+  display: none !important;
+}
+.party-action-title {
+  text-align: center;
+  color: #ffdc91;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  margin: 1px 0 5px;
+}
+.party-action-menu button {
+  padding: 10px 5px;
+  border: 2px solid #7bb9d9;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+}
+.party-action-menu button:hover,
+.party-action-menu button:focus-visible {
+  background: #346b98;
+  border-color: #fff0b1;
+}
+.party-action-menu button.hidden {
+  display: none !important;
+}
+#party-move-hint {
+  color: #ffdf96;
+  text-align: center;
+  font:
+    8px/1.7 "Press Start 2P",
+    monospace;
+}
+#party-move-hint.hidden {
+  display: none !important;
+}
+#team-grid .team-slot.swap-choice {
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 3px #fbbf24aa !important;
+}
+#team-grid .team-slot.move-destination {
+  border-color: #7be5ff !important;
+}
+.team-slot.locked {
+  cursor: not-allowed;
+}
+.team-slot.locked .slot-top {
+  justify-content: center;
+  font-size: 10px;
+}
+#team-grid .team-slot {
+  border-radius: 5px;
+  border-width: 3px !important;
+  box-shadow:
+    inset 2px 2px 0 #ffffff36,
+    2px 2px 0 #061627;
+}
+#team-grid .team-slot:focus-visible {
+  z-index: 8;
+}
+#team-grid .team-slot.active {
+  border-color: #ffe18e !important;
+  box-shadow:
+    inset 0 0 0 2px #fff3b14d,
+    0 0 0 2px #d9a958 !important;
+}
+#team-grid .team-slot.locked {
+  opacity: 0.56;
+  filter: grayscale(0.7);
+  background: #26334a !important;
+}
+#team-grid .team-slot.locked .slot-top {
+  font-size: 8px !important;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+.rotom-wing-right .bag-item {
+  border-radius: 4px;
+  border-color: #876b48;
+  background: #f3e6c4 !important;
+  color: #263b55;
+  box-shadow: inset 0 0 0 2px #fff8e8;
+}
+.rotom-wing-right .bag-item:disabled {
+  background: #d7c9a8 !important;
+  opacity: 0.7;
+}
+.rotom-wing-right .bag-item:focus-visible {
+  outline-color: #ffdd8e !important;
+}
+#party-progression-status {
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #ffecba;
+  background: #213a52;
+  border: 2px solid #7da5bb;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  font-size: 8px !important;
+  line-height: 1.65 !important;
+}
+.rotom-wing-left .team-slot .slot-top span:last-child,
+.rotom-wing-left .team-slot .team-hp-text {
+  font-size: 8px !important;
+  line-height: 1.3;
+}
+.dpad-arrow {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border: 7px solid transparent;
+  vertical-align: middle;
+}
+.arrow-up {
+  border-top: 0;
+  border-bottom: 12px solid currentColor;
+}
+.arrow-down {
+  border-bottom: 0;
+  border-top: 12px solid currentColor;
+}
+.arrow-left {
+  border-left: 0;
+  border-right: 12px solid currentColor;
+}
+.arrow-right {
+  border-right: 0;
+  border-left: 12px solid currentColor;
+}
+#rotom-container .rotom-wing-left {
+  overflow: visible;
+  isolation: isolate;
+}
+#rotom-container .rotom-wing-left .party-action-menu {
+  position: absolute;
+  left: 0;
+  top: 12%;
+  bottom: auto !important;
+  width: 230px;
+  max-width: calc(100vw - 16px);
+  margin: 0;
+  padding: 14px;
+  border: 5px solid #bf2339;
+  border-radius: 15px;
+  background: linear-gradient(155deg, #901c38, #cd3d43);
+  box-shadow:
+    0 8px 0 #691a2f,
+    0 16px 30px #0009;
+  z-index: -1 !important;
+  transform: translateX(0);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.28s ease,
+    opacity 0.28s ease,
+    visibility 0.28s;
+  pointer-events: none;
+}
+#rotom-container .rotom-wing-left .party-action-menu:not(.hidden) {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(calc(-100% - 9px));
+  pointer-events: auto;
+}
+#rotom-container .party-action-menu .party-action-title {
+  color: #ffe9ad;
+}
+#rotom-container .party-action-menu button {
+  background: #234c69;
+  border-color: #9bd6e8;
+  min-height: 39px;
+}
+@media (max-width: 1580px) {
+  #rotom-container .rotom-wing-left .party-action-menu:not(.hidden) {
+    transform: translateX(0);
+    box-shadow:
+      0 7px 0 #691a2f,
+      0 12px 26px #000c;
+  }
+  #rotom-container .rotom-wing-left .party-action-menu {
+    left: calc(100% + 8px);
+  }
+}
+@media (max-width: 1020px) {
+  #rotom-container .rotom-wing-left .party-action-menu {
+    position: fixed !important;
+    left: 8px !important;
+    bottom: 10px !important;
+    top: auto !important;
+    width: min(340px, calc(100vw - 16px));
+    max-height: 70dvh;
+    overflow: auto;
+    z-index: 999 !important;
+    transform: translateX(-110%);
+  }
+  #rotom-container .rotom-wing-left .party-action-menu:not(.hidden) {
+    transform: translateX(0);
+    z-index: 999 !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #rotom-container .rotom-wing-left .party-action-menu {
+    transition: none;
+  }
+}
+#rotom-container .rotom-wing-left .party-action-menu:not(.hidden) {
+  animation: party-slide-drawer 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes party-slide-drawer {
+  from {
+    opacity: 0;
+    translate: 28px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #rotom-container .rotom-wing-left .party-action-menu:not(.hidden) {
+    animation: none;
+  }
+}
+#rotom-container.party-drawer-open .rotom-wing-left {
+  z-index: 1600 !important;
+}
+#rotom-container.party-drawer-open .rotom-wing-left .party-action-menu {
+  z-index: 1700 !important;
+}
+body > .party-action-menu.is-portal {
+  position: fixed;
+  inset: auto 8px 12px 8px !important;
+  width: calc(100% - 16px) !important;
+  max-width: 390px;
+  max-height: min(66dvh, 460px);
+  overflow: auto;
+  margin: 0 auto;
+  display: grid !important;
+  gap: 8px;
+  padding: 15px;
+  background: linear-gradient(145deg, #891b38, #cb393a) !important;
+  border: 5px solid #eb5262;
+  border-radius: 16px;
+  box-shadow:
+    0 8px 0 #68162b,
+    0 20px 40px #000c;
+  color: #fff9d5;
+  z-index: 20000 !important;
+  animation: portal-slide 0.28s ease-out both;
+}
+body > .party-action-menu.is-portal.hidden {
+  display: none !important;
+}
+body > .party-action-menu.is-portal button {
+  background: #244e70 !important;
+  color: white;
+  border: 2px solid #8bcae8;
+  min-height: 42px;
+  font:
+    8px/1.4 "Press Start 2P",
+    monospace;
+}
+@keyframes portal-slide {
+  from {
+    translate: -120% 0;
+    opacity: 0.3;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body > .party-action-menu.is-portal {
+    animation: none;
+  }
+}
+#radar-charge-count {
+  flex-shrink: 0 !important;
+}
+#bag-list .bag-item img {
+  image-rendering: pixelated;
+  margin-right: 8px;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.2));
+}
+#bag-list .bag-item img,
+#pokemart-overlay .mart-item-icon {
+  object-fit: contain;
+  object-position: center center;
+  background: transparent !important;
+}
+#badges-container > span {
+  grid-column: 1/-1;
+  text-align: center;
+}
+#badges-container + .panel-hdr {
+  margin-top: 0;
+}
+#badges-container {
+  grid-auto-rows: 40px;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: 52px;
+  gap: 4px !important;
+  flex: 0 0 auto !important;
+  border-radius: 8px;
+  overflow: visible;
+}
+@media (max-width: 760px) {
+  #badges-container {
+    grid-auto-rows: 34px;
+    grid-template-rows: 41px !important;
+    gap: 2px !important;
+  }
+}
+.rotom-wing-left #btn-badge-case.badge-case-trigger {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #22456d, #101e35);
+  border: 2px solid #67b8eb;
+  border-radius: 9px;
+  color: #d4efff;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0 0 2px #07182d,
+    0 3px 0 #030d1d;
+}
+.rotom-wing-left #btn-badge-case:hover,
+.rotom-wing-left #btn-badge-case:focus-visible {
+  filter: brightness(1.15);
+  outline: 2px solid #ffe399;
+  outline-offset: 2px;
+}
+#badges-container.badge-case-sidebar-count {
+  display: block !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  border: 0;
+  padding: 0 !important;
+  box-shadow: none;
+  background: none !important;
+  font:
+    8px "Press Start 2P",
+    monospace;
+  color: #94c9e9;
+}
+#btn-scan-radar {
+  order: 0;
+  flex: 0 0 auto;
+  visibility: visible !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.25;
+  flex-shrink: 0 !important;
+}
+#btn-scan-radar .radar-button-label {
+  display: block;
+  font: inherit;
+}
+#btn-scan-radar #radar-charge-count.radar-button-charges {
+  display: inline-block;
+  position: static;
+  min-height: 0;
+  width: auto;
+  max-width: 95%;
+  margin: 0;
+  border-radius: 8px;
+  background: #072744;
+  border: 1px solid #62bde2;
+  color: #c9f4ff;
+  font:
+    8px/1.35 "Press Start 2P",
+    monospace;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  text-align: center;
+  flex: none;
+}
+#btn-scan-radar.radar-empty #radar-charge-count {
+  background: #49222b;
+  border-color: #ffa4a8;
+  color: #ffe3e1;
+}
+#btn-scan-radar.radar-infinite #radar-charge-count {
+  background: #1b492d;
+  border-color: #b2fbab;
+  color: #e5ffe2;
+}
+#bag-list {
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.team-slot {
+  flex-direction: column;
+  position: relative;
+}
+.rotom-wing-left .wing-screen {
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  min-height: 0;
+  scrollbar-color: #38bdf8 #101b2f;
+  gap: 7px;
+  padding: 10px 11px !important;
+}
+.rotom-wing-left #team-grid.team-grid-2x3 {
+  height: 302px !important;
+  flex: 0 0 302px;
+  gap: 4px !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: repeat(6, minmax(0, 1fr)) !important;
+}
+.rotom-wing-left #team-grid .team-slot {
+  grid-template-columns: 46px minmax(0, 1fr);
+  grid-template-rows: 16px 8px 10px;
+  gap: 1px 5px;
+  padding: 3px 6px !important;
+}
+.rotom-wing-left #team-grid .team-slot .team-slot-img {
+  width: 43px !important;
+  height: 43px !important;
+}
+.rotom-wing-left #party-progression-status {
+  margin: 0;
+  padding: 5px 3px !important;
+}
+.rotom-wing-left #btn-scan-radar {
+  min-height: 43px !important;
+  height: auto !important;
+  gap: 3px !important;
+  padding: 5px 4px !important;
+  margin: 1px 0 !important;
+}
+.rotom-wing-left #btn-scan-radar .radar-button-label {
+  font-size: 8px;
+  line-height: 1.3;
+}
+.rotom-wing-left #btn-scan-radar #radar-charge-count.radar-button-charges {
+  font-size: 8px;
+  line-height: 1.25;
+  padding: 2px 6px;
+}
+.rotom-wing-left #btn-badge-case.badge-case-trigger {
+  min-height: 51px;
+  gap: 4px;
+  margin-top: 3px;
+  padding: 6px 3px;
+}
+@media (min-width: 1280px) and (min-height: 740px) {
+  .rotom-wing-left .wing-screen {
+    overflow-y: hidden !important;
+  }
+}
+@media (min-width: 1280px) and (max-height: 739px) {
+  .rotom-wing-left .wing-screen {
+    overflow-y: auto !important;
+  }
+}
+@media (max-width: 1279px) {
+  .rotom-wing-left .wing-screen {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+}
+@media (max-width: 620px) {
+  .rotom-wing-left #team-grid.team-grid-2x3 {
+    height: 294px !important;
+    flex-basis: 294px !important;
+  }
+  .rotom-wing-left #btn-scan-radar {
+    min-height: 43px !important;
+  }
+}
+.trainer-profile {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #1a3043;
+  border: 1px solid #466a7b;
+  padding: 8px;
+  border-radius: 8px;
+  min-width: 0;
+  color: #eaf8ff;
+}
+.trainer-profile img {
+  flex: 0 0 35px;
+  border: 2px solid #5fc7ee;
+  border-radius: 7px;
+  image-rendering: pixelated;
+}
+.trainer-profile-details {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  font:
+    clamp(8px, 0.8vw, 9px)/1.6 "Press Start 2P",
+    monospace;
+}
+.trainer-profile-details strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #f8e7a4;
+}
+.rotom-wing-right .wing-screen {
+  font-size: clamp(8px, 0.85vw, 10px);
+  line-height: 1.65;
+}
+.rotom-wing-right #bag-tabs button {
+  font-size: clamp(8px, 0.75vw, 8px);
+  line-height: 1.55;
+  min-height: 36px;
+}
+.rotom-wing-right .bag-item.bag-key-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px;
+  font-size: clamp(8px, 0.85vw, 9px) !important;
+  text-align: left;
+}
+.bag-key-item img {
+  flex-shrink: 0;
+}
+.bag-key-item[disabled] {
+  cursor: default;
+}
+.bag-key-item.owned[disabled] {
+  opacity: 1;
+}
+.bag-key-item .key-item-indicator {
+  margin-left: auto;
+  color: #48d68c;
+  font-size: 12px;
+}
+.bag-key-item.owned.enabled {
+  box-shadow: inset 0 0 0 1px #58dca1;
+}
+@media (max-width: 620px) {
+  .trainer-profile-details {
+    font-size: 8px;
+  }
+}
+.route-location-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 9px 11px;
+  margin: 6px 0 8px;
+  border-radius: 9px;
+  border: 2px solid #5db6dc;
+  background: linear-gradient(130deg, #163550, #0d243c 70%);
+  box-shadow:
+    inset 0 -3px #061629,
+    0 3px 0 #16252b;
+  color: #f4f7f1;
+  min-width: 0;
+}
+.route-location-eyebrow {
+  color: #7ce5f9;
+  font:
+    clamp(8px, 0.75vw, 8px)/1.5 "Press Start 2P",
+    monospace;
+  letter-spacing: 0.5px;
+}
+#route-location-label {
+  font:
+    clamp(8px, 0.83vw, 9px)/1.55 "Press Start 2P",
+    monospace;
+  overflow-wrap: anywhere;
+  color: #ffe8a0;
+  letter-spacing: 0;
+}
+@media (max-width: 620px) {
+  .route-location-panel {
+    padding: 8px;
+    margin: 5px 0;
+  }
+}
+.rotom-wing-right .dpad-container,
+.rotom-wing-right .sidebar-movement-label {
+  display: none !important;
+}
+.rotom-wing-right #bag-list {
+  min-height: 220px !important;
+  max-height: none;
+  flex: 1 1 235px;
+  overflow-y: auto;
+}
+.rotom-wing-right .wing-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+@media (max-width: 1279px) {
+  .rotom-wing-right #bag-list {
+    min-height: 215px !important;
+    max-height: 360px !important;
+  }
+}
+@media (max-width: 760px) {
+  .rotom-wing-right #bag-list {
+    flex: none;
+    min-height: 200px !important;
+    max-height: 300px !important;
+  }
+}
+
+/* ---------------------------------------------------------------- Beta 2.0 */
+
+.panel-hdr.panel-hdr-spaced {
+  margin-top: 6px;
+}
+.sidebar-movement-label {
+  margin-top: auto;
+}
+#bag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Prima di iniziare una run le ali non mostrano squadra e zaino vuoti. */
+body:not(.in-run) #party-progression-status,
+body:not(.in-run) .rotom-wing-left #team-grid.team-grid-2x3,
+body:not(.in-run) #bag-tabs,
+body:not(.in-run) #bag-list,
+body:not(.in-run) .sidebar-movement-label,
+body:not(.in-run) .sidebar-movement-controls {
+  display: none !important; /* prevale sul display:grid !important della griglia */
+}
+body:not(.in-run) .rotom-wing-left .panel-hdr::after {
+  content: "Scegli il tuo compagno e parti per Kanto!";
+  display: block;
+  margin: 14px 4px 0;
+  color: #9fb6d3;
+  font-size: 8px;
+  line-height: 1.8;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Schede della squadra con lo stesso carattere pixel del resto del gioco. */
+.rotom-wing-left .team-slot,
+.rotom-wing-left .team-slot .slot-top,
+.rotom-wing-left .team-slot .team-hp-text {
+  font-family: "Press Start 2P", monospace;
+}
+.rotom-wing-left .team-slot .slot-top span:first-child {
+  max-width: 78%;
+}
+/* Posto bloccato: si vede quale medaglia lo sblocca. */
+#team-grid .team-slot.locked .slot-lock {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  align-self: center;
+  justify-content: center;
+  color: #c7d6ea;
+  text-align: center;
+  white-space: normal;
+}
+#team-grid .team-slot.locked {
+  opacity: 0.8;
+  filter: none;
+}
+
+/* ---------------------------------------------------------------- Telefono: pannelli dal basso
+   Durante la run squadra e zaino non stanno più sotto lo schermo (bisognava scorrere):
+   si aprono con le linguette fisse SQUADRA / ZAINO, e da soli quando servono in lotta.
+   I !important battono quelli delle regole responsive delle ali. */
+.mobile-sheet-tabs {
+  display: none;
+}
+@media (max-width: 760px) {
+  body.in-run {
+    padding-bottom: 66px;
+  }
+  body.in-run .mobile-sheet-tabs {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1150;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    background: rgba(8, 16, 33, 0.97);
+    border-top: 2px solid #31507a;
+  }
+  .mobile-sheet-tabs button {
+    min-height: 42px;
+    border: 2px solid #5d8fc0;
+    border-radius: 8px;
+    background: #16304f;
+    color: #f4fbff;
+    font: 9px/1.3 "Press Start 2P", monospace;
+    cursor: pointer;
+  }
+  .mobile-sheet-tabs button[aria-pressed="true"] {
+    background: #ffd474;
+    border-color: #fff1c6;
+    color: #1f2937;
+  }
+  body.in-run #rotom-container .rotom-wing-left,
+  body.in-run #rotom-container .rotom-wing-right {
+    display: none;
+  }
+  body.in-run.sheet-team #rotom-container .rotom-wing-left,
+  body.in-run.sheet-bag #rotom-container .rotom-wing-right {
+    display: block;
+    position: fixed !important;
+    left: 6px !important;
+    right: 6px !important;
+    top: auto !important;
+    bottom: 62px;
+    z-index: 1140;
+    width: auto !important;
+    max-width: none;
+    height: auto !important;
+    max-height: min(72vh, 620px);
+    overflow-y: auto;
+    border-radius: 18px 18px 10px 10px;
+    box-shadow:
+      0 -10px 30px rgba(0, 0, 0, 0.6),
+      0 0 0 100vmax rgba(2, 6, 23, 0.55);
+    animation: sheet-up 0.22s ease-out;
+  }
+  /* Il menu delle azioni sul Pokémon resta sopra le linguette. */
+  body.in-run #rotom-container .rotom-wing-left .party-action-menu {
+    bottom: 70px !important;
+  }
+  /* Il contenitore ha un proprio contesto di sovrapposizione: va portato sopra i piè di pagina. */
+  body.in-run.sheet-team #rotom-container,
+  body.in-run.sheet-bag #rotom-container {
+    z-index: 1140;
+  }
+}
+@keyframes sheet-up {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.in-run.sheet-team #rotom-container .rotom-wing-left,
+  body.in-run.sheet-bag #rotom-container .rotom-wing-right {
+    animation: none;
+  }
+}

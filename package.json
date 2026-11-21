@@ -1,0 +1,21 @@
+{
+  "name": "pokexplorer",
+  "version": "2.0.0-beta",
+  "private": true,
+  "description": "Pokéxplorer: fan game roguelike gratuito ambientato a Kanto.",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "build": "node tools/build.mjs",
+    "dev": "node tools/build.mjs --watch",
+    "test": "node --test \"tests/unit/*.test.mjs\"",
+    "test:e2e": "node tools/build.mjs && python3 tests/e2e/run.py",
+    "lint": "eslint .",
+    "data": "python3 tools/build-data.py"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.0",
+    "eslint": "^9.39.0",
+    "globals": "^17.0.0"
+  }
+}

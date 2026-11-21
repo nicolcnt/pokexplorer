@@ -1,0 +1,804 @@
+/* Pokéxplorer · layout.css — Involucro del RotomDex, ali laterali, piè di pagina, menu Opzioni e DEV MODE. */
+
+.rotom-top-spike {
+  position: absolute;
+  top: -70px;
+  width: 0;
+  height: 0;
+  border-left: 28px solid transparent;
+  border-right: 28px solid transparent;
+  border-bottom: 75px solid #ff432a;
+  filter: drop-shadow(0 -5px 0 #991b1b);
+}
+.rotom-eye-ball {
+  width: 34px;
+  height: 56px;
+  background: #38bdf8;
+  border: 4px solid #fff;
+  border-radius: 50%;
+}
+.rotom-eye-ball::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 5px;
+  width: 10px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+}
+.rotom-eye-ball.left {
+  transform: rotate(-8deg);
+}
+.rotom-dots-left,
+.rotom-dots-right {
+  position: absolute;
+  top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rotom-dots-left {
+  left: 25px;
+}
+.rotom-dots-right {
+  right: 25px;
+}
+.head-dot {
+  width: 10px;
+  height: 10px;
+  background: #7f1d1d;
+  border-radius: 50%;
+}
+.rotom-feet {
+  position: absolute;
+  bottom: -22px;
+  width: 220px;
+  display: flex;
+  justify-content: space-between;
+}
+.rotom-foot {
+  width: 55px;
+  height: 30px;
+  background: #dc2626;
+  border: 5px solid #991b1b;
+  border-radius: 0 0 25px 25px;
+}
+.pokenav-screen {
+  flex: 1;
+  background: #020617;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#rotom-container {
+  width: min(1380px, 98vw);
+  max-width: none;
+  height: min(780px, 94vh);
+  gap: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  isolation: isolate;
+}
+#rotom-body {
+  background: linear-gradient(180deg, #ff432a 0%, #dc2626 100%);
+  border: 8px solid #991b1b;
+  border-radius: 110px 110px 50px 50px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  width: min(630px, calc(100vw - 28px));
+  height: min(700px, calc(100vh - 50px));
+  min-height: 0;
+  padding: 18px;
+  z-index: 5;
+  box-shadow:
+    0 30px 72px #000a,
+    inset 0 9px 14px #ffc4a643;
+}
+.rotom-face {
+  border: 5px solid #1e293b;
+  border-radius: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 30px;
+  margin-top: 5px;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.9);
+  width: min(295px, 85%);
+  height: 72px;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+.rotom-screen-frame {
+  width: 100%;
+  flex: 1;
+  background: #0f172a;
+  border: 7px solid #7f1d1d;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.85);
+  min-height: 0;
+}
+@media (max-width: 760px) {
+  #rotom-body {
+    padding: 11px;
+    border-width: 5px;
+    border-radius: 65px 65px 28px 28px;
+  }
+  .rotom-top-spike {
+    top: -45px;
+    border-left-width: 20px;
+    border-right-width: 20px;
+    border-bottom-width: 50px;
+  }
+  .rotom-face {
+    height: 60px;
+    margin-bottom: 8px;
+    padding: 0 11px;
+  }
+  .rotom-eye-ball {
+    width: 25px;
+    height: 39px;
+  }
+}
+.rotom-eye-ball.right {
+  transform: rotate(8deg);
+  animation:
+    rotom-wink 17s infinite,
+    rotom-pupils 11s 1s infinite !important;
+}
+@keyframes rotom-wink {
+  0%,
+  42%,
+  45%,
+  100% {
+    scale: 1 1;
+  }
+  43% {
+    scale: 1 0.06;
+  }
+}
+@keyframes rotom-pupils {
+  0%,
+  19%,
+  31%,
+  70%,
+  100% {
+    background-position: 50% 50%;
+  }
+  22%,
+  27% {
+    background-position: 68% 50%;
+  }
+  75%,
+  82% {
+    background-position: 25% 50%;
+  }
+}
+@media (max-height: 950px) and (min-width: 761px) {
+  #rotom-container {
+    height: min(745px, 84vh);
+  }
+  #rotom-body {
+    height: min(665px, 77vh);
+  }
+}
+.rotom-face {
+  position: relative;
+  overflow: visible;
+  background: radial-gradient(ellipse at center, #052434, #020617 76%);
+}
+.rotom-face > span {
+  font-size: 8px !important;
+  letter-spacing: 1px !important;
+  position: relative;
+  z-index: 2;
+  transform: translateY(-15px);
+}
+.rotom-eye-ball {
+  transform-origin: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 3;
+  box-shadow:
+    0 0 0 2px #1b5977,
+    0 0 14px #37c9fb4d;
+}
+.rotom-mouth {
+  position: absolute;
+  transform: translateX(-50%);
+  background: #fefefe;
+  border: 3px solid #49bce7;
+  border-radius: 8% 8% 90% 90%;
+  clip-path: polygon(0 0, 100% 0, 89% 82%, 72% 100%, 28% 100%, 11% 82%);
+  box-shadow: 0 2px 0 #173d62;
+  overflow: hidden;
+}
+.rotom-mouth > span {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  background: #234e6e;
+  transform: translateX(-50%);
+}
+@keyframes rotom-follow {
+  0%,
+  15%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20%,
+  33% {
+    transform: translate(6px, -2px);
+  }
+  38%,
+  53% {
+    transform: translate(-7px, 2px);
+  }
+  63%,
+  78% {
+    transform: translate(1px, 5px);
+  }
+}
+.rotom-eye-ball::after {
+  animation: rotom-follow 11s infinite ease-in-out !important;
+}
+.rotom-eye-ball.right::after {
+  animation-delay: 0.8s !important;
+}
+@media (max-width: 1279px) {
+  #rotom-container,
+  #rotom-container.wings-open {
+    width: 100%;
+    max-width: 800px;
+    height: auto !important;
+    min-height: 0;
+    margin: 28px auto 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 16px 12px;
+    overflow: visible;
+  }
+  #rotom-body {
+    order: 0;
+    width: min(630px, 100%) !important;
+    flex: 0 0 min(630px, 100%);
+    height: min(690px, 83dvh) !important;
+    min-height: 490px;
+  }
+}
+@media (max-width: 620px) {
+  #rotom-body {
+    height: min(620px, 78dvh) !important;
+    min-height: 450px;
+    flex-basis: 100%;
+    width: 100% !important;
+    border-radius: 58px 58px 24px 24px;
+    padding: 9px;
+    border-width: 5px;
+  }
+  #rotom-body .rotom-face {
+    height: 58px;
+    margin-bottom: 7px;
+  }
+}
+.poke-site-footer {
+  position: relative;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 12px auto 8px;
+  padding: 9px 16px;
+  border: 1px solid #385671;
+  border-radius: 10px;
+  background: rgba(9, 20, 40, 0.84);
+  color: #f4f0dc;
+  font:
+    8px/1.8 "Press Start 2P",
+    monospace;
+  max-width: min(95vw, 880px);
+}
+.poke-site-footer a {
+  color: #84cfff;
+  text-decoration: none;
+}
+.poke-site-footer a:hover,
+.poke-site-footer a:focus-visible {
+  text-decoration: underline;
+  color: white;
+}
+.poke-site-footer small {
+  color: #73b3c5;
+}
+.poke-site-footer strong {
+  color: #ffcf75;
+}
+@media (max-width: 1279px) {
+  .poke-site-footer {
+    margin: 12px 4px 10px;
+    font-size: 8px;
+    gap: 10px;
+  }
+}
+@media (max-width: 620px) {
+  .poke-site-footer {
+    text-align: center;
+    font-size: 8px;
+  }
+}
+.music-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-left: 12px;
+  border-left: 1px solid #355779;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+}
+.music-controls label,
+.music-controls output {
+  color: #aedcec;
+  font-size: 8px;
+  white-space: nowrap;
+}
+.music-controls input[type="range"] {
+  width: 110px;
+  max-width: 32vw;
+  min-height: 28px;
+  accent-color: #4bc5f5;
+  cursor: pointer;
+  touch-action: auto;
+}
+@media (max-width: 620px) {
+  .music-controls {
+    border-left: 0;
+    padding-left: 0;
+    gap: 7px;
+    width: 100%;
+  }
+  .music-controls input[type="range"] {
+    width: clamp(90px, 32vw, 150px);
+  }
+}
+.developer-panel {
+  display: flex;
+  flex-direction: column;
+}
+.developer-panel.hidden {
+  display: none !important;
+}
+.developer-panel h3 {
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+}
+.rotom-face .rotom-eye-ball.rotom-expression {
+  animation: none !important;
+  transition: scale 100ms steps(2, end);
+}
+.rotom-face .rotom-eye-ball.rotom-expression.rotom-closed {
+  scale: 1 0.08 !important;
+}
+.rotom-face .rotom-eye-ball.rotom-expression.rotom-looking-left::after {
+  animation: none !important;
+  transform: translateX(-7px) !important;
+}
+.rotom-face .rotom-eye-ball.rotom-expression.rotom-looking-right::after {
+  animation: none !important;
+  transform: translateX(7px) !important;
+}
+#dev-mode-trigger {
+  z-index: 1100;
+  box-shadow: 0 3px 0 #0b2630;
+  letter-spacing: 0.2px;
+}
+#dev-mode-trigger[aria-pressed="true"] {
+  color: #effff0;
+}
+#dev-mode-trigger:hover {
+  filter: brightness(1.14);
+}
+#dev-access-code {
+  width: 180px;
+  max-width: 100%;
+  align-self: center;
+  padding: 11px 12px;
+  background: #f7f1df;
+  border: 3px solid #426d88;
+  border-radius: 6px;
+  color: #1b2737;
+  font: bold 22px/1.4 monospace;
+  text-align: center;
+  letter-spacing: 0.35em;
+}
+.dev-status-text {
+  font:
+    10px/1.65 system-ui,
+    Arial,
+    sans-serif;
+}
+#pokenav-screen-root.legendary-encounter-transition::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 250;
+  pointer-events: none;
+  background: #000;
+  animation: legendary-pulses 1.2s steps(1, end) forwards;
+}
+@keyframes legendary-pulses {
+  0%,
+  15%,
+  40%,
+  67%,
+  94% {
+    background: #000;
+  }
+  26%,
+  54%,
+  80% {
+    background: #fff;
+  }
+  100% {
+    background: transparent;
+  }
+}
+#game-quick-settings {
+  gap: 6px;
+  align-items: center;
+}
+#game-quick-settings button {
+  background: #123149;
+  color: #f3f4fb;
+  border: 2px solid #5cb9d8;
+  border-radius: 6px;
+  padding: 8px 9px;
+  min-height: 35px;
+  cursor: pointer;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+}
+#game-quick-settings button[aria-pressed="true"] {
+  background: #346c38;
+  border-color: #aadf75;
+}
+@media (max-width: 650px) {
+  #game-quick-settings {
+    gap: 4px;
+  }
+  #game-quick-settings button {
+    font-size: 8px;
+    min-height: 33px;
+    padding: 6px;
+  }
+}
+.poke-site-footer #speed-toggle,
+.poke-site-footer #auto-dialogue-toggle {
+  border: 2px solid #63bfd6;
+  background: #153a57;
+  color: #f4fbff;
+  padding: 8px;
+  min-height: 34px;
+  border-radius: 6px;
+  font:
+    8px/1.4 "Press Start 2P",
+    monospace;
+  cursor: pointer;
+}
+.poke-site-footer #speed-toggle[aria-pressed="true"],
+.poke-site-footer #auto-dialogue-toggle[aria-pressed="true"] {
+  background: #316334;
+  border-color: #a1dc7d;
+}
+#game-quick-settings {
+  position: fixed;
+  top: 10px !important;
+  right: 12px !important;
+  z-index: 1101 !important;
+  display: block !important;
+}
+#game-quick-settings #quick-settings-toggle {
+  width: 45px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #8feaf0;
+  background: #102f43;
+  border-radius: 7px;
+  box-shadow:
+    0 4px 0 #081522,
+    0 5px 13px #0008;
+  cursor: pointer;
+  padding: 8px;
+}
+.menu-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 23px;
+}
+.menu-hamburger i {
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: #ffebbb;
+  box-shadow: 1px 1px 0 #56677b;
+}
+#game-quick-settings #quick-settings-panel {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  background: #132b3c;
+  border: 3px solid #8feaf0;
+  border-radius: 9px;
+  box-shadow:
+    0 6px 0 #091a27,
+    0 11px 22px #0009;
+  color: #fff7de;
+}
+#game-quick-settings #quick-settings-panel.hidden {
+  display: none !important;
+}
+.quick-settings-heading {
+  font:
+    9px/1.6 "Press Start 2P",
+    monospace;
+  color: #ffe5a0;
+  text-align: center;
+}
+#game-quick-settings #dev-mode-trigger {
+  position: static;
+  top: auto !important;
+  right: auto !important;
+  min-height: 38px;
+  width: 100%;
+  font-size: 8px;
+  padding: 8px 6px;
+  margin: 0;
+}
+#game-quick-settings button:focus-visible {
+  outline: 3px solid #fff19c !important;
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  #game-quick-settings {
+    top: 7px !important;
+    right: 7px !important;
+  }
+}
+#game-quick-settings #quick-settings-panel {
+  width: clamp(224px, 23vw, 255px);
+}
+@media (max-width: 600px) {
+  #game-quick-settings #quick-settings-panel {
+    width: 225px;
+  }
+}
+#game-quick-settings #quick-settings-panel {
+  max-height: calc(100dvh - 76px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+#game-quick-settings #developer-panel {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  gap: 7px;
+}
+#game-quick-settings #developer-panel h3 {
+  color: #bcd4ea;
+  border-top: 1px solid #51718a;
+  padding-top: 9px;
+  font-size: 8px;
+}
+#game-quick-settings #developer-panel .dev-status-text {
+  font-size: 8px;
+  line-height: 1.55;
+  color: #c4d7e6;
+  margin: 0;
+}
+#game-quick-settings #developer-panel button {
+  background: #173a50;
+  color: #e7f6ff;
+  border: 2px solid #5cb9d8;
+  border-radius: 6px;
+  min-height: 36px;
+  box-shadow: none;
+  font:
+    8px/1.4 "Press Start 2P",
+    monospace;
+  padding: 8px 5px;
+}
+@media (max-width: 760px) {
+  #game-quick-settings {
+    max-width: calc(100vw - 16px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rotom-face .rotom-eye-ball.rotom-expression {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+.rotom-face .rotom-mouth {
+  display: block !important;
+  bottom: 6px !important;
+  left: 50% !important;
+  width: 48px !important;
+  height: 14px !important;
+  z-index: 3;
+}
+.rotom-face .rotom-mouth span {
+  height: 7px;
+}
+#logout-discord-btn:not(.hidden) {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 9px 8px;
+  color: #e5f4ff;
+  background: #182d48;
+  border: 2px solid #5f95c2;
+  border-radius: 6px;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  cursor: pointer;
+}
+#logout-discord-btn:hover,
+#logout-discord-btn:focus-visible {
+  border-color: #ffe18e;
+  outline-offset: 2px;
+}
+#pokenav-screen-root {
+  position: relative;
+  isolation: isolate;
+}
+#game-quick-settings #return-main-menu-quick {
+  background: #31445d;
+  border-color: #8cc9e8;
+  min-height: 43px;
+  font-size: 8px;
+  line-height: 1.6;
+}
+#game-quick-settings #return-main-menu-quick.hidden {
+  display: none !important;
+}
+.poke-credits-footer {
+  position: relative;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  width: max-content;
+  max-width: 95vw;
+  margin: 0 auto 14px;
+  padding: 10px 17px;
+  border: 1px solid #345374;
+  border-radius: 9px;
+  background: rgba(9, 20, 40, 0.9);
+  color: #a9c9df;
+  font:
+    8px/1.9 "Press Start 2P",
+    monospace;
+  text-align: center;
+}
+.poke-credits-footer strong {
+  color: #ffe1a0;
+}
+.poke-credits-footer a {
+  color: #80d8ff;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.poke-credits-footer a:hover,
+.poke-credits-footer a:focus-visible {
+  text-decoration: underline;
+  color: #fff;
+}
+@media (max-width: 650px) {
+  .poke-site-footer {
+    gap: 8px;
+    padding: 8px;
+    margin-bottom: 6px;
+  }
+  .poke-credits-footer {
+    width: 95vw;
+    box-sizing: border-box;
+    font-size: 8px;
+    padding: 10px 8px;
+    margin-bottom: 12px;
+  }
+}
+#game-quick-settings #save-game-quick {
+  width: 100%;
+  background: #184b48;
+  border-color: #69d6ba;
+  color: #eefff7;
+}
+#game-quick-settings .quick-save-status {
+  font:
+    8px/1.8 "Press Start 2P",
+    monospace;
+  color: #ffdb9b;
+  background: #152838;
+  padding: 9px 7px;
+  border-radius: 6px;
+  border: 1px solid #b89266;
+  overflow-wrap: anywhere;
+}
+#game-quick-settings .quick-save-status.saved {
+  color: #a2f4b9;
+  border-color: #6aca8d;
+}
+
+/* ---------------------------------------------------------------- Beta 2.0 */
+
+/* Strumenti DEV nel piè di pagina: VAI AL PIANO e SKIP. */
+.dev-footer-tools:not(.hidden) {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.poke-site-footer #dev-skip-battle {
+  padding: 8px 12px;
+  border: 2px solid #fca5a5;
+  border-radius: 6px;
+  background: #5b1a1a;
+  color: #fff1f1;
+  box-shadow: 0 3px 0 #2a0b0b;
+  font: 8px/1 "Press Start 2P", monospace;
+  cursor: pointer;
+}
+.poke-site-footer #dev-skip-battle:hover {
+  filter: brightness(1.2);
+}
+.poke-site-footer #dev-skip-battle:focus-visible {
+  outline: 3px solid #ffdf84;
+  outline-offset: 3px;
+}
+
+/* Schermi grandi: il RotomDex cresce in proporzione invece di lasciare spazio vuoto.
+   zoom mantiene nitidi gli sprite (image-rendering: pixelated) e ricalcola il layout. */
+@media (min-width: 1800px) and (min-height: 1040px) {
+  #rotom-container,
+  .poke-site-footer,
+  .poke-credits-footer {
+    zoom: 1.18;
+  }
+}
+@media (min-width: 2400px) and (min-height: 1340px) {
+  #rotom-container,
+  .poke-site-footer,
+  .poke-credits-footer {
+    zoom: 1.5;
+  }
+}

@@ -1,0 +1,1102 @@
+/* Pokéxplorer · map.css — Mappa del piano: caselle, edifici, sprite, nebbia, Grotta Celeste e avvisi. */
+
+.grid-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.grid-cell.fog * {
+  display: none !important;
+}
+.grid-cell.path {
+  background: #d4b584;
+}
+.grid-cell.grass {
+  background: #4ade80;
+  box-shadow: inset 0 0 6px rgba(15, 75, 35, 0.5);
+}
+.grid-cell.town-ground {
+  background: #eab308;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+}
+.grid-cell.path {
+  background-position:
+    2px 4px,
+    7px 3px;
+}
+.grid-cell.water {
+  box-shadow: inset 0 0 8px #26739b !important;
+}
+.grid-cell.town-ground:nth-child(10n + 5),
+.grid-cell.town-ground:nth-child(n + 41):nth-child(-n + 50) {
+  background-color: #dfbc7e;
+  background-image: radial-gradient(#c79f66 1px, transparent 2px);
+  background-size: 11px 14px;
+}
+#discovery-notice {
+  opacity: 0;
+  color: #fff;
+  font:
+    10px/1.8 "Press Start 2P",
+    monospace;
+  pointer-events: none;
+  transition:
+    opacity 0.35s,
+    transform 0.35s;
+}
+#dungeon-viewport {
+  flex: 1;
+  position: relative;
+  background: #020617;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+  padding: 7px;
+}
+#dungeon-grid-board {
+  display: grid;
+  gap: 0;
+  border: 4px solid #166534;
+  background: #4e8c50;
+  box-shadow: inset 0 0 25px #203e20;
+  width: min(100%, 462px, calc(100vh - 230px));
+  height: auto;
+  aspect-ratio: 1;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  padding: 4px;
+  border-width: 3px;
+  border-radius: 9px;
+}
+.grid-cell {
+  position: relative;
+  border: 0 !important;
+  image-rendering: pixelated;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.grid-cell .grid-icon {
+  position: relative;
+  filter: drop-shadow(1px 3px 2px #0006);
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+  z-index: 12;
+}
+.grid-cell .player-avatar {
+  width: 90% !important;
+  height: 90% !important;
+  filter: drop-shadow(0 2px 1px #131a25);
+}
+.grid-cell.fog {
+  box-shadow: none;
+  opacity: 1;
+  border: 0 !important;
+}
+.grid-cell.fog::before,
+.grid-cell.fog::after {
+  display: none !important;
+  content: none;
+}
+.grid-cell.fog > * {
+  display: none !important;
+}
+#dungeon-grid-board:has(.fog) {
+  background-color: #102036;
+}
+.grid-cell.grass {
+  background-color: #7bbd77;
+  background-image:
+    radial-gradient(ellipse at 30% 70%, #a4d489 0 5%, transparent 6%),
+    repeating-linear-gradient(92deg, transparent 0 8px, #66a861 9px 10px, transparent 11px 17px);
+  background-size:
+    18px 20px,
+    31px 27px;
+}
+.grid-cell.grass::before {
+  color: #3e8746;
+  font:
+    19px Georgia,
+    serif;
+  letter-spacing: 2px;
+  content: "";
+  position: absolute;
+  inset: 16% 6%;
+  opacity: 0.68;
+  background: url("../assets/sprites/world/grass-tuft.svg") center / 30% auto repeat;
+  transform: none;
+  pointer-events: none;
+}
+.grid-cell.tree {
+  background: #427e4d;
+  overflow: visible;
+}
+.grid-cell.water {
+  background: #419ccd;
+  background-image: repeating-linear-gradient(145deg, #83d1ed 0 3px, #4fadd8 4px 10px, #2f84bf 11px 14px);
+}
+.grid-cell.town-ground {
+  overflow: visible;
+}
+.grid-cell.town-ground:nth-child(10n + 5),
+.grid-cell.town-ground:nth-child(n + 41):nth-child(-n + 50) {
+  background-color: #82bb7a;
+  background-image: radial-gradient(#3e8c51 1px, transparent 2px);
+}
+.grid-cell .map-building {
+  position: absolute;
+  width: 185%;
+  height: 185%;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  image-rendering: pixelated;
+  object-fit: contain;
+  z-index: 10;
+  filter: drop-shadow(0 4px 1px #213e28a8);
+  pointer-events: none;
+}
+#dungeon-grid-board .grid-cell:has(.map-building) {
+  overflow: visible;
+  z-index: 11;
+}
+.grid-cell.fog {
+  background: #13253a url("../assets/sprites/world/fog.svg") !important;
+  background-size: 1000% 1000% !important;
+  background-repeat: no-repeat !important;
+}
+.grid-cell.locked-exit {
+  background: radial-gradient(circle, #a56c50, #694c49) !important;
+}
+#discovery-notice.raid-notice {
+  border-color: #ffd35c;
+  background: linear-gradient(160deg, #4a1d38, #151532);
+  pointer-events: auto;
+  padding: 22px 25px;
+}
+#discovery-notice.raid-notice:before {
+  content: "";
+  display: block;
+  margin: 0 auto 8px;
+  width: 54px;
+  height: 54px;
+  background: url("../assets/sprites/items/pokeball.png") center/contain no-repeat;
+  filter: drop-shadow(0 2px 5px #fbe3ae8c);
+  animation: raid-bait 1.2s ease-in-out infinite alternate;
+}
+@keyframes raid-bait {
+  to {
+    transform: translateY(-7px) rotate(9deg);
+  }
+}
+#discovery-notice {
+  position: absolute;
+  left: 50%;
+  bottom: 44px;
+  top: auto;
+  transform: translate(-50%, 20px);
+  z-index: 95;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: rgba(12, 23, 52, 0.96);
+  border: 3px solid #f7cf60;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+#discovery-notice.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+#discovery-notice.raid-notice {
+  bottom: 56px;
+  max-width: 86%;
+}
+.grid-cell .town-npc {
+  object-fit: contain;
+}
+.grid-cell.path {
+  background-color: #e2c787;
+  background-image: radial-gradient(#af925d 1px, transparent 1.5px), radial-gradient(#eed5a2 1px, transparent 2px) !important;
+  background-size:
+    10px 13px,
+    15px 13px;
+  box-shadow: inset 0 1px 3px #a4874773 !important;
+}
+.grid-cell.town-ground {
+  background-color: #83b780 !important;
+  background-image: radial-gradient(#56945b 1px, transparent 2px), radial-gradient(#a8d1a0 1px, transparent 2px) !important;
+  background-size:
+    11px 11px,
+    17px 15px !important;
+}
+.grid-cell .town-npc.official-overworld,
+.grid-cell .player-avatar.official-overworld {
+  bottom: auto !important;
+  image-rendering: pixelated;
+  filter: drop-shadow(1px 2px 0 #26392c55) !important;
+  pointer-events: none;
+  z-index: 9;
+}
+.grid-cell .official-overworld {
+  isolation: isolate;
+}
+.grid-cell .route-trainer.official-overworld {
+  image-rendering: pixelated;
+  filter: drop-shadow(1px 2px 0 #26392c55) !important;
+  pointer-events: none;
+  z-index: 9;
+}
+.grid-cell:has(.map-building) {
+  isolation: isolate;
+}
+#dungeon-grid-board .grid-cell .route-trainer.official-overworld.single-frame {
+  box-sizing: content-box !important;
+  width: 15px !important;
+  height: 32px !important;
+  background-repeat: no-repeat !important;
+  background-size: 128px 32px !important;
+  overflow: hidden !important;
+  transform: translate(-50%, -50%) scale(1.35) !important;
+  animation: none !important;
+  isolation: isolate;
+}
+#dungeon-grid-board .grid-cell .official-overworld {
+  box-sizing: content-box;
+  clip-path: none !important;
+  animation: none !important;
+}
+#dungeon-grid-board .grid-cell .player-avatar.official-overworld {
+  background-position: var(--facing-position, 0px) 0 !important;
+}
+#dungeon-grid-board .grid-cell .route-trainer.official-overworld.single-frame,
+#dungeon-grid-board .grid-cell .town-npc.official-overworld {
+  background-position: 0 0 !important;
+}
+#dungeon-grid-board .grid-cell .sprite-frame {
+  display: block !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  background: none !important;
+  width: 16px !important;
+  height: 32px !important;
+  overflow: hidden !important;
+  transform: translate(-50%, -50%) scale(1.26) !important;
+}
+#dungeon-grid-board .grid-cell .sprite-frame .overworld-frame-img {
+  display: block !important;
+  position: absolute;
+  top: 0 !important;
+  left: 0 !important;
+  height: 32px !important;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  image-rendering: pixelated;
+  object-fit: none;
+  filter: none !important;
+  transform: none !important;
+}
+@media (max-width: 1279px) {
+  #dungeon-grid-board {
+    width: min(100%, 440px, calc(83dvh - 210px));
+  }
+}
+@media (max-width: 620px) {
+  #dungeon-grid-board {
+    width: min(100%, 420px, calc(78dvh - 175px));
+  }
+}
+@media (max-width: 1279px) {
+  #mobile-dpad {
+    display: grid;
+    position: absolute;
+    right: clamp(7px, 2.4vw, 17px);
+    bottom: clamp(8px, 2.5vw, 18px);
+    grid-template: repeat(3, 44px) / repeat(3, 44px);
+    gap: 2px;
+    z-index: 23;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+  #mobile-dpad .mobile-dpad-key {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border-radius: 12px;
+    background: rgba(13, 33, 58, 0.53);
+    border: 2px solid rgba(163, 221, 248, 0.62);
+    color: rgba(255, 255, 255, 0.97);
+    font:
+      22px/1 Arial,
+      sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    transition:
+      background 0.12s,
+      opacity 0.12s;
+  }
+  #mobile-dpad .mobile-dpad-key:active,
+  #mobile-dpad .mobile-dpad-key.is-pressed {
+    background: rgba(27, 151, 216, 0.85);
+    border-color: #f0fbff;
+  }
+  #mobile-dpad .mobile-dpad-key:focus-visible {
+    outline: 3px solid #fbed83;
+    outline-offset: 2px;
+  }
+  #mobile-dpad .mobile-dpad-center {
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    background: rgba(207, 235, 248, 0.33);
+    border-radius: 50%;
+  }
+}
+@media (max-width: 420px) {
+  #mobile-dpad {
+    grid-template: repeat(3, 40px) / repeat(3, 40px);
+    gap: 2px;
+    right: 7px;
+    bottom: 7px;
+  }
+  #mobile-dpad .mobile-dpad-key {
+    width: 40px;
+    height: 40px;
+    font-size: 19px;
+    border-radius: 11px;
+  }
+}
+@media (max-width: 360px) {
+  #mobile-dpad {
+    grid-template: repeat(3, 36px) / repeat(3, 36px);
+  }
+  #mobile-dpad .mobile-dpad-key {
+    width: 36px;
+    height: 36px;
+  }
+}
+#dungeon-grid-board .grid-cell .player-avatar.red-local-sprite {
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+  position: absolute;
+  left: 50% !important;
+  top: 50% !important;
+  background-repeat: no-repeat;
+  background-position: center !important;
+  image-rendering: pixelated;
+  animation: none !important;
+  background-size: 32px 32px !important;
+}
+@keyframes player-tile-arrive {
+  from {
+    translate: var(--walk-offset-x, 0) var(--walk-offset-y, 0);
+  }
+  to {
+    translate: 0px 0px;
+  }
+}
+#dungeon-grid-board .grid-cell .player-avatar.walk-arrival {
+  animation: player-tile-arrive 170ms linear both !important;
+  z-index: 40 !important;
+  will-change: translate;
+}
+#dungeon-grid-board .grid-cell .player-avatar.girl-local-sprite {
+  display: block !important;
+  position: absolute;
+  left: 50% !important;
+  top: 50% !important;
+  width: 32px !important;
+  background-repeat: no-repeat;
+  background-position: center bottom !important;
+  image-rendering: pixelated;
+  filter: drop-shadow(0px 2px 1px #081329) !important;
+}
+#dungeon-grid-board .grid-cell .player-avatar.girl-local-sprite.local-fishing-sprite {
+  height: 48px !important;
+  background-size: 32px 48px !important;
+  transform: translate(-50%, -65%) scale(1.12) !important;
+}
+#discovery-notice {
+  max-width: 96%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.75;
+  font-size: clamp(8px, 1vw, 10px) !important;
+}
+#exp-log-bar {
+  height: 36px;
+  background: #0f172a;
+  border-top: 2px solid #1e293b;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  font-size: 8px;
+  color: #38bdf8;
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 30px;
+}
+#exp-log-bar #log-status-text {
+  line-height: 1.65;
+}
+@media (max-width: 620px) {
+  #discovery-notice {
+    font-size: 8px !important;
+  }
+}
+#mobile-dpad .mobile-dpad-key {
+  touch-action: none;
+  -webkit-user-select: none;
+}
+#dungeon-grid-board .grid-cell .player-avatar {
+  animation: none !important;
+}
+#pokemon-info-overlay:not(.hidden) ~ #mobile-dpad {
+  pointer-events: none;
+}
+#dungeon-grid-board .grid-cell .player-avatar.red-local-sprite:not(.red-fishing-sprite) {
+  filter: drop-shadow(0 1px 0 #28334266) !important;
+}
+#dungeon-grid-board .grid-cell:has(.map-building) {
+  z-index: 31 !important;
+  overflow: visible !important;
+  isolation: auto !important;
+}
+#dungeon-grid-board .grid-cell .map-building {
+  width: 185% !important;
+  height: 185% !important;
+  bottom: 0 !important;
+  z-index: 35 !important;
+  pointer-events: none !important;
+}
+#dungeon-grid-board .grid-cell .gate-police {
+  place-items: center;
+  filter: drop-shadow(0 2px 1px #14212e);
+  z-index: 8;
+}
+#dungeon-grid-board .grid-cell .sprite-frame.local-fallback .overworld-frame-img {
+  object-fit: contain !important;
+  width: 16px !important;
+  height: 32px !important;
+  left: 0 !important;
+  top: 0 !important;
+}
+#dungeon-grid-board .grid-cell .sprite-frame.local-fallback {
+  width: 28px !important;
+  height: 38px !important;
+  overflow: visible !important;
+  transform: translate(-50%, -53%) scale(1) !important;
+}
+#dungeon-grid-board .grid-cell .sprite-frame.local-fallback .overworld-frame-img {
+  width: 28px !important;
+  height: 38px !important;
+  object-fit: contain !important;
+}
+#dungeon-grid-board .grid-cell:has(.map-building),
+#dungeon-grid-board .grid-cell:has(.player-avatar),
+#dungeon-grid-board .grid-cell:has(.sprite-frame) {
+  z-index: var(--map-depth, 11) !important;
+  isolation: auto !important;
+}
+#dungeon-grid-board .grid-cell:has(.map-building) {
+  overflow: visible !important;
+}
+#dungeon-grid-board .grid-cell .map-building {
+  pointer-events: none;
+  width: 168% !important;
+  height: 178% !important;
+  left: 50% !important;
+  bottom: -1px !important;
+}
+#dungeon-grid-board .grid-cell .player-avatar.red-local-sprite:not(.red-fishing-sprite) {
+  transform: translate(-50%, -60%) scale(1.18) !important;
+}
+#dungeon-grid-board {
+  position: relative;
+}
+#dungeon-grid-board > .grid-cell {
+  z-index: var(--map-depth, 1) !important;
+  isolation: auto;
+}
+#dungeon-grid-board > .grid-cell.building-footprint {
+  overflow: visible;
+}
+#dungeon-grid-board > .map-building-overlay {
+  position: absolute;
+  max-width: none;
+  max-height: none;
+  transform: translateX(-50%);
+}
+#dungeon-grid-board > .grid-cell.player-cell {
+  overflow: visible !important;
+}
+#dungeon-grid-board.npc-conversation-active .town-npc,
+#dungeon-grid-board.npc-conversation-active .route-trainer,
+#dungeon-grid-board.npc-conversation-active .gate-police,
+#dungeon-grid-board.npc-conversation-active .player-avatar {
+  visibility: hidden;
+}
+#dungeon-grid-board .grid-cell .exit-arrow {
+  color: #fff;
+  font: 900 clamp(18px, 3vw, 34px)/1 system-ui;
+  background: none !important;
+  border: 0;
+  border-radius: 0;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center;
+  font-size: 0;
+  line-height: 1;
+  filter: none !important;
+  text-shadow: none;
+  pointer-events: none;
+  z-index: 15;
+}
+#dungeon-grid-board .grid-cell .exit-arrow::after {
+  content: "";
+  display: block;
+  width: 27px;
+  height: 20px;
+  background: url("../assets/sprites/ui/exit-pixel-arrow.svg") center/contain no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 3px 0 #1a2c3d9e);
+}
+#dungeon-grid-board .grid-cell .player-avatar.walk-arrival {
+  animation: player-tile-arrive var(--walk-duration, 210ms) linear both !important;
+  will-change: translate;
+}
+@keyframes celestialPulse {
+  from {
+    transform: scale(0.94);
+    opacity: 0.76;
+  }
+  to {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+.celestial-cave-exit {
+  font-size: clamp(18px, 3vw, 30px);
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: #f8e5ff;
+  text-shadow: 0 0 9px #c4a5ff;
+  animation: celestialPulse 1.2s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .celestial-mewtwo-aura,
+  .celestial-cave-exit,
+  .celestial-cinematic-glow {
+    animation: none;
+  }
+}
+#dungeon-grid-board.celestial-cave .grid-cell .celestial-oak-sprite {
+  object-fit: contain;
+  image-rendering: pixelated;
+  bottom: 0;
+  z-index: 9;
+}
+#dungeon-grid-board.celestial-cave {
+  background: #031023 !important;
+  border: 4px solid #1b4e68;
+  box-shadow:
+    0 0 0 3px #0b2334,
+    0 0 28px #2ea1cf55,
+    inset 0 0 40px #000;
+}
+#dungeon-grid-board.celestial-cave .grid-cell.water {
+  background: #063254 url("../assets/cave/water-tile.svg") center/100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: inset 0 0 8px #061b3a !important;
+}
+#dungeon-grid-board.celestial-cave .grid-cell.cave-stone {
+  background: #48576e url("../assets/cave/slate-tile.svg") center/100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: inset 0 0 5px #18263b !important;
+}
+#dungeon-grid-board.celestial-cave .grid-cell.cave-stone:nth-child(3n) {
+  filter: brightness(1.08);
+}
+#dungeon-grid-board.celestial-cave .grid-cell.cave-stone:has(.celestial-cave-exit) {
+  background: radial-gradient(circle, #9066c2 0, #423769 62%, #18253e 100%) !important;
+  box-shadow:
+    0 0 15px #bf93ff99,
+    inset 0 0 10px #000 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #dungeon-grid-board.celestial-cave .celestial-aura-orb,
+  #dungeon-grid-board.celestial-cave .celestial-aura-orb:before,
+  #dungeon-grid-board.celestial-cave .celestial-mewtwo-aura {
+    animation: none !important;
+  }
+}
+#dungeon-grid-board {
+  isolation: isolate;
+  overflow: hidden !important;
+}
+#dungeon-grid-board > .map-building-overlay {
+  z-index: 220 !important;
+  width: 18.5% !important;
+  height: 18.5% !important;
+  pointer-events: none;
+}
+#dungeon-grid-board > .map-scenery-overlay {
+  position: absolute;
+  display: block !important;
+  pointer-events: none;
+  transform: translateX(-50%);
+  object-fit: contain;
+  image-rendering: pixelated;
+  z-index: 220 !important;
+}
+#dungeon-grid-board > .map-scenery-overlay.scenery-tree {
+  width: 11.5% !important;
+  height: 13% !important;
+  filter: drop-shadow(0 3px 1px #11281e75);
+}
+#dungeon-grid-board > .map-scenery-overlay.scenery-decoration {
+  width: 10.3% !important;
+  height: 10.5% !important;
+}
+#dungeon-grid-board > .grid-cell.player-cell {
+  z-index: 48 !important;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 {
+  position: absolute;
+  inset: -112%;
+  z-index: 170 !important;
+  pointer-events: none;
+  isolation: isolate;
+  overflow: visible;
+  display: grid;
+  place-items: center;
+  filter: none !important;
+  background: radial-gradient(ellipse at center, #f4dfff40 0%, #a479e355 18%, #4f238d42 39%, transparent 67%) !important;
+  animation: celestialPortalBreathe 4s ease-in-out infinite alternate !important;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-outer-shimmer {
+  position: absolute;
+  width: 84%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(from 20deg, #fcfaff00, #e6b9ff6b, #4d16ae05, #fff9ff88, #4428bf10, #e6b9ff6b, #fcfaff00);
+  filter: blur(7px);
+  box-shadow: 0 0 22px #a767ff88;
+  animation: celestialCoronaSpin 5.1s linear infinite;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .celestial-aura-orb {
+  display: block;
+  position: absolute;
+  min-width: 24px;
+  min-height: 24px;
+  aspect-ratio: 1;
+  border: 1px solid #fff6;
+  border-radius: 50%;
+  z-index: 4;
+  background: radial-gradient(circle at 37% 29%, #fff 0 5%, #faf9ff 17%, #f3d7ff 37%, #b27cff 57%, #5f21a7 82%, #2a0d68 100%);
+  box-shadow:
+    inset 5px 5px 11px #fff,
+    inset -8px -9px 14px #331267bb,
+    0 0 10px 4px #f6e0ffeb,
+    0 0 30px 10px #9d52f5bb,
+    0 0 60px 14px #691ad58c;
+  animation: celestialOrbSoul 3.6s ease-in-out infinite alternate !important;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .celestial-aura-orb:before {
+  content: "";
+  position: absolute;
+  inset: -32%;
+  border: 2px solid #d4a8ff99;
+  border-radius: 50%;
+  box-shadow:
+    0 0 13px #b17dffae,
+    inset 0 0 10px #bc83ff70;
+  transform: rotate(-25deg) scaleX(1.16) scaleY(0.48);
+  animation: celestialRingPrecession 3.8s ease-in-out infinite alternate;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .celestial-aura-orb:after {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  width: auto;
+  height: auto;
+  left: 8%;
+  top: 8%;
+  background: radial-gradient(circle at 48% 46%, #ffffffda 0 7%, #fff6 22%, transparent 61%);
+  filter: blur(3px);
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-inner-core {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 15%, #fbf0ffbb 39%, transparent 78%);
+  filter: blur(3px);
+  animation: celestialHeartPulse 1.6s ease-in-out infinite alternate;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-ellipse {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #e7b7ff;
+  transform: rotate(-22deg);
+  z-index: 2;
+  box-shadow:
+    0 0 13px #eebfff,
+    0 0 27px #762dc8;
+  animation: celestialEllipseOrbit 4.7s ease-in-out infinite alternate;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-ellipse-front {
+  z-index: 7;
+  border-color: #f8e5ffbf;
+  clip-path: polygon(0 45%, 100% 45%, 100% 100%, 0 100%);
+  animation-delay: -2.1s;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-particles i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: clamp(2px, 0.45vw, 5px);
+  height: clamp(2px, 0.45vw, 5px);
+  background: #fff8ff;
+  border-radius: 45%;
+  box-shadow:
+    0 0 8px 2px #e5baff,
+    0 0 13px #822dea;
+  --angle: calc(var(--spark-index) * 40deg);
+  transform: rotate(var(--angle)) translateX(50px);
+  animation: celestialSparkFlight 2.9s calc(var(--spark-index) * -0.37s) linear infinite;
+}
+@keyframes celestialPortalBreathe {
+  from {
+    transform: scale(0.94);
+    opacity: 0.87;
+  }
+  to {
+    transform: scale(1.045);
+    opacity: 1;
+  }
+}
+@keyframes celestialCoronaSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes celestialOrbSoul {
+  0% {
+    filter: brightness(1.4) saturate(0.58);
+    transform: scale(0.85);
+  }
+  100% {
+    filter: brightness(0.98) saturate(2);
+    transform: scale(1.12);
+  }
+}
+@keyframes celestialHeartPulse {
+  from {
+    opacity: 0.8;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.28);
+  }
+}
+@keyframes celestialRingPrecession {
+  to {
+    transform: rotate(25deg) scaleX(1.25) scaleY(0.5);
+  }
+}
+@keyframes celestialEllipseOrbit {
+  to {
+    transform: rotate(30deg) scale(1.1);
+    opacity: 0.65;
+  }
+}
+@keyframes celestialSparkFlight {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(16px) scale(0.6);
+  }
+  30% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(65px) scale(0.28);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #dungeon-grid-board.celestial-cave .celestial-portal-v2,
+  #dungeon-grid-board.celestial-cave .celestial-portal-v2 * {
+    animation: none !important;
+  }
+}
+#dungeon-grid-board.celestial-cave > .grid-cell:has(> .celestial-portal-v2) {
+  z-index: 205 !important;
+  overflow: visible !important;
+  isolation: auto !important;
+  filter: none !important;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .celestial-aura-orb {
+  width: 57% !important;
+  height: 57% !important;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-ellipse {
+  width: 95%;
+  height: 33%;
+}
+#dungeon-grid-board.celestial-cave .celestial-portal-v2 .aura-ellipse-front {
+  width: 105%;
+  height: 43%;
+}
+@media (max-width: 620px) {
+  #dungeon-grid-board .grid-cell .sprite-frame {
+    transform: translate(-50%, -55%) scale(1.05) !important;
+    overflow: hidden !important;
+  }
+  #mobile-dpad {
+    z-index: 13 !important;
+  }
+}
+@media (min-width: 761px) {
+  #mobile-dpad {
+    display: none !important;
+  }
+}
+@media (max-width: 760px) {
+  #dungeon-grid-board .grid-cell img {
+    image-rendering: pixelated;
+    object-fit: contain;
+  }
+}
+#dungeon-grid-board .grid-cell .player-avatar.red-local-sprite:not(.local-fishing-sprite),
+#dungeon-grid-board .grid-cell .player-avatar.girl-local-sprite:not(.local-fishing-sprite) {
+  width: 32px !important;
+  height: 32px !important;
+  transform: translate(-50%, -55%) !important;
+  background-size: 32px 32px !important;
+  background-position: center bottom !important;
+  image-rendering: pixelated !important;
+  filter: drop-shadow(0 1px 0 #142e4266) !important;
+}
+#dungeon-grid-board .grid-cell .player-avatar.girl-local-sprite:not(.local-fishing-sprite) {
+  height: 40px !important;
+  background-size: 32px 40px !important;
+  transform: translate(-50%, -57%) !important;
+}
+#dungeon-grid-board > .map-building-overlay {
+  object-fit: contain !important;
+  image-rendering: pixelated !important;
+  /* Preserve architecture collision anchor and foreground layer. */
+}
+#dungeon-grid-board .grid-cell .player-avatar.walk-arrival {
+  animation-name: player-tile-arrive !important;
+  animation-duration: var(--walk-duration, 210ms) !important;
+  animation-timing-function: linear !important;
+  animation-fill-mode: both !important;
+  will-change: translate !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #dungeon-grid-board .grid-cell .player-avatar.walk-arrival {
+    animation: none !important;
+  }
+}
+#dungeon-grid-board .grid-cell .sprite-frame.pokex-single-frame {
+  width: 16px !important;
+  height: 32px !important;
+  overflow: hidden !important;
+  transform: translate(-50%, -50%) scale(1.26) !important;
+}
+#dungeon-grid-board .grid-cell .sprite-frame.pokex-single-frame .overworld-frame-img {
+  width: 16px !important;
+  height: 32px !important;
+  object-fit: contain !important;
+  max-width: 16px !important;
+}
+#dungeon-grid-board .grid-cell.oak-story-event:after {
+  content: "";
+  position: absolute;
+  inset: 5%;
+  border: 1px solid #b8a0ff80;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ad8bffa1;
+  pointer-events: none;
+  animation: oakStoryPulse 2.8s ease-in-out infinite alternate;
+}
+@keyframes oakStoryPulse {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.95;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #dungeon-grid-board .grid-cell.oak-story-event:after {
+    animation: none;
+  }
+}
+#dungeon-grid-board .grid-cell .sprite-frame.celestial-oak-sprite {
+  width: 24px !important;
+  height: 32px !important;
+  overflow: hidden !important;
+  transform: translate(-50%, -53%) scale(1.04) !important;
+}
+#dungeon-grid-board .grid-cell .sprite-frame.celestial-oak-sprite .overworld-frame-img {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 24px !important;
+  height: 32px !important;
+  max-width: 24px !important;
+  max-height: 32px !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  image-rendering: pixelated !important;
+}
+
+/* ---------------------------------------------------------------- Beta 2.0 */
+
+/* Su telefono e tablet il D-pad è una fila di quattro tasti sotto la mappa:
+   non copre più le caselle (uscita compresa). */
+@media (max-width: 760px) {
+  #dungeon-viewport {
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+  #mobile-dpad {
+    position: static;
+    flex: 0 0 auto;
+    grid-template: 44px / repeat(4, 52px);
+    gap: 8px;
+    pointer-events: auto;
+  }
+  #mobile-dpad > span {
+    display: none;
+  }
+  #mobile-dpad .mobile-dpad-key {
+    width: 52px;
+    height: 44px;
+  }
+  #mobile-dpad [data-move="left"] {
+    order: 1;
+  }
+  #mobile-dpad [data-move="up"] {
+    order: 2;
+  }
+  #mobile-dpad [data-move="down"] {
+    order: 3;
+  }
+  #mobile-dpad [data-move="right"] {
+    order: 4;
+  }
+  #dungeon-grid-board {
+    width: min(100%, 420px, calc(78dvh - 230px));
+  }
+}
+
+/* Bivio: due uscite con un simbolo che anticipa il piano successivo. */
+#dungeon-grid-board .grid-cell .exit-tag {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  z-index: 16;
+  padding: 1px 3px;
+  border-radius: 4px;
+  font: 12px/1.1 system-ui, sans-serif;
+  color: #fff;
+  pointer-events: none;
+}
+#dungeon-grid-board .grid-cell.exit-trainers .exit-tag {
+  background: #b42318;
+  box-shadow: 0 0 0 2px #ffd0c9;
+}
+#dungeon-grid-board .grid-cell.exit-calm .exit-tag {
+  background: #2e7d32;
+  box-shadow: 0 0 0 2px #c8f5cb;
+}
+#dungeon-grid-board .grid-cell.exit-trainers {
+  box-shadow: inset 0 0 0 3px #e2574c !important;
+}
+#dungeon-grid-board .grid-cell.exit-calm {
+  box-shadow: inset 0 0 0 3px #5cc46a !important;
+}
+
+/* Gli avvisi compaiono in alto e non coprono più le ultime righe della mappa
+   (il raid resta al centro: va confermato). */
+#discovery-notice:not(.raid-notice) {
+  top: 10px;
+  bottom: auto;
+  transform: translate(-50%, -16px);
+}
+#discovery-notice.visible:not(.raid-notice) {
+  transform: translate(-50%, 0);
+}
+
+/* Cambio di piano: nome del piano in dissolvenza. */
+.floor-transition {
+  position: absolute;
+  inset: 0;
+  z-index: 96;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: radial-gradient(ellipse at center, rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0.95));
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.floor-transition strong {
+  font: 20px/1.3 "Press Start 2P", monospace;
+  color: #ffd474;
+  text-shadow: 3px 3px 0 #000;
+}
+.floor-transition span {
+  font: 9px/1.6 "Press Start 2P", monospace;
+  color: #9fd8ff;
+  letter-spacing: 1px;
+}
+.floor-transition.playing {
+  visibility: visible;
+  animation: floor-transition 1.6s ease-out forwards;
+}
+html[data-game-speed="2"] .floor-transition.playing {
+  animation-duration: 0.9s;
+}
+@keyframes floor-transition {
+  0% { opacity: 1; }
+  55% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floor-transition.playing {
+    animation-duration: 0.6s;
+  }
+}

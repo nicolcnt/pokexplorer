@@ -1,0 +1,665 @@
+/* Pokéxplorer · pokedex.css — Pokédex. */
+
+#dex-sidebar-count.badge-case-sidebar-count {
+  font-size: 8px;
+  color: #f9d88c;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  min-height: 0;
+  height: auto;
+}
+#pokedex-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 190;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background: radial-gradient(ellipse at 45% 30%, #1c4973ee, #040c1df9 87%);
+  color: #edf5ff;
+}
+#pokedex-overlay.hidden {
+  display: none !important;
+}
+.dex-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  background: linear-gradient(135deg, #123451, #07182d 70%);
+  border: 2px solid #6ac6eb;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 20px #17456d,
+    0 8px 28px #000c;
+  overflow: hidden;
+}
+.dex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 2px solid #315e7d;
+  padding: 11px 13px;
+  background: #0b2037;
+  flex-shrink: 0;
+}
+.dex-header small {
+  display: block;
+  color: #77c8e9;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  letter-spacing: 0.2px;
+}
+.dex-header h2 {
+  font:
+    16px/1.4 "Press Start 2P",
+    monospace;
+  color: #f6dc9d;
+  margin: 3px 0;
+}
+.dex-header span {
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  color: #9bded6;
+}
+#dex-close {
+  width: 33px;
+  height: 33px;
+  flex-shrink: 0;
+  border: 2px solid #65bfec;
+  background: #112941;
+  color: #fff;
+  border-radius: 7px;
+  font:
+    18px Arial,
+    sans-serif;
+  cursor: pointer;
+}
+.dex-body {
+  display: grid;
+  grid-template-columns: minmax(165px, 42%) minmax(0, 1fr);
+  min-height: 0;
+  flex: 1;
+  gap: 7px;
+  padding: 7px;
+}
+.dex-browser,
+.dex-detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid #315a74;
+  border-radius: 8px;
+  background: #0b2039;
+  overflow: hidden;
+}
+.dex-browser {
+  padding: 7px;
+  gap: 7px;
+}
+.dex-browser input,
+.dex-browser select {
+  background: #142f49;
+  border: 1px solid #5b9dbe;
+  color: #f0f7ff;
+  border-radius: 5px;
+  min-width: 0;
+  padding: 8px 5px;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  outline-offset: 2px;
+  user-select: text;
+}
+.dex-browser input {
+  width: 100%;
+}
+.dex-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+.dex-filters select {
+  font-size: 8px;
+  max-width: 100%;
+  padding: 7px 3px;
+}
+.dex-species-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  gap: 3px;
+  scrollbar-color: #447e9d #0b2039;
+}
+.dex-list-entry {
+  display: grid;
+  grid-template-columns: 36px 1fr 18px;
+  align-items: center;
+  gap: 3px;
+  padding: 7px 5px;
+  min-height: 30px;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: #112b44;
+  color: #deecf8;
+  cursor: pointer;
+  text-align: left;
+}
+.dex-list-entry:hover,
+.dex-list-entry:focus-visible {
+  border-color: #8edcf9;
+}
+.dex-list-entry.active {
+  border-color: #5cc6e8;
+  background: #205472;
+}
+.dex-list-entry.caught .dex-list-state {
+  color: #80e4a7;
+}
+.dex-list-number {
+  color: #8db7cc;
+}
+.dex-list-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dex-list-state {
+  color: #85d7ff;
+  text-align: center;
+}
+.dex-detail {
+  padding: 9px;
+  gap: 9px;
+  overflow-y: auto;
+}
+.dex-hero {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 113px;
+}
+.dex-sprite-stage {
+  height: 108px;
+  width: 108px;
+  flex: 0 0 108px;
+  border: 1px solid #477f9f;
+  border-radius: 10px;
+  background: radial-gradient(circle at 50% 50%, #1c5677, #0a2138 75%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dex-sprite-stage img {
+  width: 97px;
+  height: 97px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.dex-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+#dex-detail-num {
+  font:
+    8px "Press Start 2P",
+    monospace;
+  color: #82c9e7;
+}
+#dex-detail-name {
+  font:
+    clamp(9px, 1.1vw, 13px)/1.5 "Press Start 2P",
+    monospace;
+  overflow-wrap: anywhere;
+  color: #fff1bd;
+}
+#dex-detail-state {
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  color: #9be2c1;
+}
+#dex-detail-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.dex-type {
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  border-radius: 5px;
+  padding: 4px 6px;
+  border: 1px solid #ffffff78;
+  color: #fff9e7;
+  text-shadow: 1px 1px #1b3546;
+  box-shadow: inset 0 1px #ffffff1f;
+}
+.dex-type.type-normal {
+  background: #6f8494;
+}
+.dex-type.type-fire {
+  background: #e47c43;
+}
+.dex-type.type-water {
+  background: #468bd1;
+}
+.dex-type.type-grass {
+  background: #55a568;
+}
+.dex-type.type-electric {
+  background: #c8a133;
+  color: #18212b;
+  text-shadow: none;
+}
+.dex-type.type-poison {
+  background: #9673bc;
+}
+.dex-type.type-psychic {
+  background: #b86e9d;
+}
+.dex-type.type-dragon {
+  background: #7c75cf;
+}
+.dex-type.type-flying {
+  background: #708abd;
+}
+.dex-type.type-ground {
+  background: #b38d57;
+  color: #18212b;
+  text-shadow: none;
+}
+.dex-type.type-rock {
+  background: #9e8a63;
+  color: #18212b;
+  text-shadow: none;
+}
+.dex-type.type-bug {
+  background: #7ea04b;
+  color: #18212b;
+  text-shadow: none;
+}
+.dex-type.type-ghost {
+  background: #6d62a6;
+}
+.dex-type.type-ice {
+  background: #69b7d6;
+  color: #163244;
+  text-shadow: none;
+}
+.dex-type.type-fighting {
+  background: #c66a4d;
+}
+.dex-type.type-dark {
+  background: #5a5c72;
+}
+.dex-type.type-steel {
+  background: #7f9aa8;
+  color: #142b39;
+  text-shadow: none;
+}
+.dex-type.type-fairy {
+  background: #d88cb8;
+  color: #3d1731;
+  text-shadow: none;
+}
+.dex-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  border-bottom: 1px solid #3b6785;
+  padding-bottom: 7px;
+}
+.dex-tabs button {
+  font:
+    clamp(8px, 0.68vw, 8px)/1.5 "Press Start 2P",
+    monospace;
+  min-height: 29px;
+  padding: 5px 1px;
+  border: 1px solid #3d789b;
+  color: #a4cce5;
+  background: #122a43;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.dex-tabs button.active {
+  background: #236084;
+  color: #fff4c6;
+  border-color: #78d5ef;
+}
+.dex-tab-content {
+  flex: 1;
+  min-height: 80px;
+  font:
+    8px/1.75 "Press Start 2P",
+    monospace;
+  color: #d9edfc;
+  overflow-y: auto;
+  user-select: text;
+}
+.dex-tab-content p,
+.dex-tab-content small {
+  line-height: 1.8;
+}
+.dex-muted {
+  color: #9bbfd6;
+  font-size: 8px;
+}
+.dex-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+.dex-facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 7px;
+  border: 1px solid #365e7d;
+  background: #17344d;
+  border-radius: 6px;
+}
+.dex-facts span {
+  font-size: 8px;
+  color: #96c2dd;
+}
+.dex-facts strong {
+  font-size: 9px;
+  color: #f6e8bb;
+}
+.dex-flavor {
+  font-size: 8px;
+  border-top: 1px solid #315e7d;
+  padding: 10px 1px;
+}
+.dex-stat-list {
+  display: grid;
+  gap: 5px;
+}
+.dex-stat-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  border-bottom: 1px solid #264967;
+  padding-bottom: 4px;
+  font-size: 8px;
+}
+.dex-stat-list strong {
+  color: #f9d98f;
+  font-size: 8px;
+}
+.dex-variants {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+.dex-variant {
+  border: 1px solid #457b9d;
+  border-radius: 7px;
+  background: linear-gradient(#1b4461, #112d49);
+  padding: 7px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+  min-width: 0;
+}
+.dex-variant-img {
+  width: 80px;
+  height: 80px;
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+.dex-variant strong {
+  font:
+    8px/1.7 "Press Start 2P",
+    monospace;
+  color: #f5dc99;
+}
+.dex-variant small {
+  font:
+    8px/1.7 "Press Start 2P",
+    monospace;
+  color: #8ae4b0;
+}
+.dex-journal-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-left: 3px solid #6fc8ec;
+  padding: 7px 10px;
+  margin-bottom: 9px;
+  background: #173752;
+}
+.dex-journal-item strong {
+  color: #e8db99;
+}
+.dex-journal-item small {
+  font-size: 8px;
+  color: #9bbcd3;
+}
+.dex-journal-item p {
+  font-size: 8px;
+}
+.dex-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: space-between;
+  padding: 9px 12px;
+  background: #0a1a2f;
+  border-top: 1px solid #335b79;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  color: #82c7d9;
+  flex-shrink: 0;
+}
+#dex-cloud-status {
+  color: #f3d990;
+}
+@media (max-width: 640px) {
+  #pokedex-overlay {
+    padding: 3px;
+  }
+  .dex-panel {
+    border-radius: 6px;
+  }
+  .dex-header {
+    padding: 7px;
+  }
+  .dex-header h2 {
+    font-size: 12px;
+  }
+  .dex-header small,
+  .dex-header span,
+  .dex-footer {
+    font-size: 8px;
+  }
+  .dex-body {
+    gap: 3px;
+    padding: 4px;
+    grid-template-columns: minmax(110px, 38%) minmax(0, 1fr);
+  }
+  .dex-browser,
+  .dex-detail {
+    padding: 4px;
+    gap: 5px;
+  }
+  .dex-list-entry {
+    grid-template-columns: 24px 1fr 11px;
+    padding: 5px 3px;
+    font-size: 8px;
+  }
+  .dex-list-number {
+    font-size: 8px;
+  }
+  .dex-filters {
+    grid-template-columns: 1fr;
+  }
+  .dex-browser input,
+  .dex-browser select {
+    font-size: 8px;
+    padding: 6px 2px;
+  }
+  .dex-hero {
+    gap: 5px;
+    min-height: 75px;
+  }
+  .dex-sprite-stage {
+    width: 70px;
+    height: 72px;
+    flex-basis: 70px;
+  }
+  .dex-sprite-stage img {
+    width: 65px;
+    height: 65px;
+  }
+  #dex-detail-name {
+    font-size: 8px;
+  }
+  .dex-identity {
+    gap: 4px;
+  }
+  .dex-tabs button {
+    font-size: 8px;
+    min-height: 24px;
+  }
+  .dex-variants {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+  .dex-variant-img {
+    height: 55px;
+    width: 55px;
+  }
+  .dex-variant strong,
+  .dex-variant small {
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #pokedex-overlay * {
+    scroll-behavior: auto;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.rotom-wing-left #btn-open-pokedex.dex-sidebar-trigger {
+  width: 100%;
+  min-height: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #18526c, #10243b);
+  border: 2px solid #67c6e5;
+  border-radius: 9px;
+  color: #e8f6ff;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0 0 2px #07182d,
+    0 3px 0 #030d1d;
+  margin-top: 4px;
+}
+.rotom-wing-left #btn-open-pokedex.dex-sidebar-trigger:hover,
+.rotom-wing-left #btn-open-pokedex.dex-sidebar-trigger:focus-visible {
+  filter: brightness(1.15);
+  outline: 2px solid #ffe399;
+  outline-offset: 2px;
+}
+.dex-discovery-toast {
+  position: absolute;
+  z-index: 189;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 94%;
+  border: 2px solid #67cce3;
+  background: linear-gradient(130deg, #1a4665, #0a223d);
+  color: #e8f5ff;
+  border-radius: 10px;
+  box-shadow:
+    0 5px 23px #000b,
+    inset 0 0 15px #467fb03b;
+  padding: 13px 17px;
+  text-align: center;
+  font:
+    8px/1.8 "Press Start 2P",
+    monospace;
+  pointer-events: none;
+  animation: dex-discovery-enter 0.35s ease-out both;
+}
+.dex-discovery-toast.shiny {
+  border-color: #f9df8b;
+  color: #ffe8aa;
+  box-shadow:
+    0 0 20px #ffcd654d,
+    0 5px 23px #000b;
+}
+@keyframes dex-discovery-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dex-discovery-toast {
+    animation: none;
+  }
+}
+.dex-evo-title {
+  color: #e9d799;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  margin: 12px 0 7px;
+}
+.dex-evolution-line {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.dex-evo-entry {
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  border: 1px solid #72b7d6;
+  border-radius: 5px;
+  background: #173a53;
+  color: #d7eafa;
+  padding: 7px;
+  cursor: pointer;
+}
+.dex-evo-entry:hover,
+.dex-evo-entry:focus-visible {
+  border-color: #f5d99b;
+  color: #f5d99b;
+}

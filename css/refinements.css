@@ -1,0 +1,80 @@
+/* Pokéxplorer Beta Version — interventi UI, senza riposizionare il menu. */
+#pokenav-screen-root #menu-message,
+#pokenav-screen-root #continue-recap-overlay,
+#pokenav-screen-root #eevee-stone-gift {
+  position: absolute !important; inset: 0 !important; z-index: 160;
+  display: grid; place-items: center; padding: 10px;
+  background: rgba(3,13,29,.82); overflow: auto;
+}
+#pokenav-screen-root #menu-message.hidden,
+#pokenav-screen-root #continue-recap-overlay.hidden,
+#pokenav-screen-root #eevee-stone-gift.hidden { display: none !important; }
+#menu-message { margin: 0; max-width: none !important; border: none !important; }
+#menu-message .menu-message-card {
+  width:min(100%,330px); border:2px solid #37b8ed; border-radius:10px;
+  background:#091e35; box-shadow:0 14px 44px #000a;
+  padding:12px; max-height:90%; overflow:auto; display:flex; flex-direction:column; gap:10px;
+}
+#menu-message-heading { font:9px/1.6 "Press Start 2P",monospace; color:#ffdc88; margin:0; }
+#menu-message-text { max-height:50vh; overflow:auto; line-height:1.8; text-wrap:pretty; }
+#menu-message-text p { margin:0 0 9px; line-height:1.8; }
+#menu-message-text p:last-child { margin-bottom:0; }
+#menu-message .menu-message-buttons { margin-top:4px; }
+#continue-recap-overlay .continue-recap-card,
+#eevee-stone-gift .eevee-gift-card {
+  width: min(100%, 328px); max-height: min(96%, 550px); overflow: auto;
+  border: 2px solid #31b9ed; border-radius: 12px; background: #091e35;
+  color: #e4efff; box-shadow: 0 12px 40px #000b; padding: 12px;
+  font: 8px/1.6 "Press Start 2P", monospace;
+}
+.continue-recap-card header { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.continue-recap-card h2, .eevee-gift-card h2 { color: #ffda83; font-size: 9px; margin: 0 0 12px; }
+.continue-recap-card button, .eevee-gift-card button { background: #29b5ed; color: #06182a; border: 0; border-radius: 5px; cursor: pointer; padding: 9px 10px; font: inherit; }
+.continue-recap-card header button { background: #17334f; color: #eaf3ff; padding: 5px 7px; }
+.continue-recap-grid { display: grid; gap: 3px; }
+.recap-line { display: flex; justify-content: space-between; gap: 8px; padding: 5px; background: #102e4a; }
+.recap-line span { color: #b7cddf; }
+.recap-line strong { color: #fff1c9; text-align: right; overflow-wrap: anywhere; }
+.continue-recap-team { margin: 9px 0; display: flex; gap: 4px; flex-wrap: wrap; }
+.continue-recap-team > small { width: 100%; color: #c5dcf3; }
+.recap-mon { display: flex; align-items: center; gap: 4px; background: #123a56; padding: 3px; border-radius: 4px; max-width: 100%; }
+.recap-mon img { width: 23px; height: 23px; object-fit: contain; image-rendering: pixelated; }
+.continue-recap-actions { display: flex; gap: 7px; }
+.continue-recap-actions button { flex: 1; }
+.continue-recap-actions button:first-child { background: #253d58; color: #eef3fc; }
+#eevee-stone-choices { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 5px; margin-bottom: 12px; }
+#eevee-stone-choices .eevee-stone-option { background: #15344f; color: #d8eefd; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; word-break: break-word; font-size: 7px; border: 1px solid #4388b5; }
+#eevee-stone-choices .eevee-stone-option img { width: 40px; height: 40px; object-fit: contain; image-rendering: pixelated; }
+#eevee-stone-choices .eevee-stone-option small { font: 7px/1.4 monospace; color: #fcdf9a; }
+#eevee-stone-gift-cancel { width: 100%; }
+#objectives-overlay .objective-entry-art { width: 28px !important; height: 28px !important; }
+#objectives-overlay .objective-entry { min-height: 44px; }
+.objectives-filter { background: #0d2e4e; color: #f5e4b9; border: 1px solid #39b6e9; border-radius: 5px; padding: 7px; font: 8px "Press Start 2P",monospace; }
+#team-grid .team-slot.badge-locked-placeholder { opacity: .85; border-color: #5c7595; background: repeating-linear-gradient(135deg,rgba(80,127,164,.13) 0 5px,rgba(21,38,66,.48) 5px 11px),linear-gradient(120deg,#162f45,#1c3047 55%,#18283f) !important; }
+#team-grid .team-slot.badge-locked-placeholder::before { content: none !important; }
+#dungeon-grid-board .grid-cell .grid-icon.map-pickup-sprite { width: 55.25% !important; height: 55.25% !important; image-rendering: pixelated; object-fit: contain; }
+.run-mode-chip,.checkpoint-indicator { display: block; margin: 3px 0 6px; color: #a3ddf2; border: 1px solid #2d83a1; border-radius: 5px; padding: 5px; font: 8px/1.5 "Press Start 2P",monospace; }
+.checkpoint-indicator { border-color: #66778e; color: #e0dca4; }
+body:not(.in-run) .run-mode-chip,body:not(.in-run) .checkpoint-indicator,body:not(.in-run) #route-location-panel { display: none !important; }
+@media(prefers-reduced-motion:no-preference){ #pokenav-screen-root #menu-message:not(.hidden), #pokenav-screen-root #continue-recap-overlay:not(.hidden), #pokenav-screen-root #eevee-stone-gift:not(.hidden){ animation: pokex-panel-appear .14s ease-out; } }
+@keyframes pokex-panel-appear { from { opacity: 0; } to { opacity: 1; } }
+@media(max-width:420px), (max-height:650px){ #continue-recap-overlay .continue-recap-card,#eevee-stone-gift .eevee-gift-card { max-height: 94%; padding: 8px; } .recap-mon img { width: 19px; height: 19px; } }
+
+#pokenav-screen-root #eevee-stone-evolution { position:absolute !important; inset:0; z-index:165; display:grid; place-items:center; background:#03101fdb; padding:10px; }
+#pokenav-screen-root #eevee-stone-evolution.hidden { display:none !important; }
+#eevee-stone-evolution .eevee-gift-card { width:min(100%,328px); border:2px solid #31b9ed; padding:12px; border-radius:10px; background:#091e35; color:#e7efff; font:8px/1.6 "Press Start 2P", monospace; text-align:center; }
+.eevee-evolution-preview { display:flex; align-items:center; justify-content:center; gap:9px; }
+.eevee-evolution-preview figure { margin:4px; display:grid; gap:3px; }
+.eevee-evolution-preview img { width:70px; height:70px; object-fit:contain; image-rendering:pixelated; }
+.eevee-evolution-preview figcaption { font:7px "Press Start 2P",monospace; }
+.eevee-evolution-preview > span { font-size:18px; color:#fae09e; }
+.eevee-evolution-actions { display:flex; gap:8px; }
+.eevee-evolution-actions button { flex:1; border:0; border-radius:5px; padding:9px; cursor:pointer; font:8px "Press Start 2P",monospace; background:#2ebbf3; color:#0b233c; }
+.eevee-evolution-actions button:first-child { background:#274362; color:#e6efff; }
+
+body:not(.in-run) .trainer-profile-details > span { display:none !important; }
+
+@media (prefers-reduced-motion: no-preference) {
+  #objectives-overlay:not(.hidden), #pokedex-overlay:not(.hidden), #badge-case-overlay:not(.hidden),
+  #pokenav-screen-root #eevee-stone-evolution:not(.hidden) { animation: pokex-panel-appear .14s ease-out; }
+}

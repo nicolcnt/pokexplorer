@@ -1,0 +1,1599 @@
+/* Pokéxplorer · menus.css — Accesso, menu principale, scelta dello starter, obiettivi, game over e finale. */
+
+#main-menu-overlay,
+#starter-scene-overlay,
+#pokemart-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  text-align: center;
+}
+.menu-card {
+  border: 2px solid #38bdf8;
+  border-radius: 12px;
+  flex-direction: column;
+}
+.briefcase-inner {
+  justify-content: space-around;
+  position: relative;
+}
+.pokeball-wrapper {
+  position: relative;
+}
+.pokeball-top,
+.pokeball-bottom {
+  position: absolute;
+  transition: transform 0.4s;
+  z-index: 2;
+}
+.pokeball-top {
+  top: 0;
+  background: radial-gradient(circle at 35% 35%, #ff4d4d 0%, #cc0000 70%, #800000 100%);
+  border: 4px solid #111;
+  border-bottom: 2px solid #111;
+}
+.pokeball-bottom {
+  bottom: 0;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e6e6e6 70%, #b3b3b3 100%);
+  border: 4px solid #111;
+  border-top: 2px solid #111;
+}
+.pokeball-button {
+  position: absolute;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d9d9d9 100%);
+  border: 4px solid #111;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+.pokeball-wrapper.open .pokeball-button {
+  opacity: 0;
+}
+.pokemon-showcase-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  transition:
+    transform 0.5s,
+    opacity 0.4s;
+}
+.pokemon-showcase-img {
+  image-rendering: pixelated;
+}
+#starter-scene-overlay .logo-title {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #f7f4e5;
+  text-shadow:
+    0 3px 0 #15335b,
+    0 0 18px rgba(0, 210, 255, 0.3);
+}
+.briefcase-container {
+  align-items: center;
+  position: relative;
+}
+.briefcase-container:before {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 18px;
+  height: 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #93a4ba, #74859b);
+}
+.pokeball-wrapper:after {
+  content: "BALL";
+  position: absolute;
+  bottom: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: #dce7f3;
+  letter-spacing: 1px;
+}
+#starter-scene-overlay {
+  justify-content: space-around;
+  gap: 8px;
+  padding: 12px 18px;
+  background: repeating-linear-gradient(92deg, #d3b792 0 35px, #c7a781 35px 38px, #e5c7a0 38px 73px) !important;
+  border: 12px solid #526274;
+  color: #213a54;
+}
+#starter-scene-overlay > div:first-child {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+#starter-scene-overlay .briefcase-container {
+  flex: 0 0 auto;
+  width: min(100%, 530px) !important;
+  height: 220px !important;
+  padding: 8px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 6px solid #62718b !important;
+  border-radius: 15px 15px 22px 22px !important;
+  background: linear-gradient(#435a7b, #7b92ae 32%, #a1b7c8 33%, #617594) !important;
+  box-shadow:
+    0 13px 0 #584b49,
+    0 17px 18px #38221f7a,
+    inset 0 0 0 3px #bfcbd4 !important;
+  overflow: visible;
+}
+.briefcase-container::before {
+  content: "";
+  display: none !important;
+}
+.briefcase-lid {
+  position: relative;
+  width: 100%;
+  height: 69px;
+  flex: none;
+  border: 4px solid #62718b;
+  border-radius: 10px 10px 4px 4px;
+  background: repeating-linear-gradient(140deg, #adc4db 0 8px, #bed0e0 9px 18px);
+  box-shadow:
+    inset 0 4px #d9e7ef,
+    inset 0 -5px #839bb2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.briefcase-brand {
+  font:
+    8px "Press Start 2P",
+    monospace;
+  color: #56708e;
+  letter-spacing: 0.8px;
+}
+.briefcase-lid-symbol {
+  font:
+    12px "Press Start 2P",
+    monospace;
+  color: #d15c48;
+  text-shadow: 2px 2px #fff3d5;
+}
+#starter-scene-overlay .briefcase-inner {
+  width: 100% !important;
+  height: 123px !important;
+  flex: 1;
+  min-height: 123px;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 10px;
+  border: 4px solid #566980 !important;
+  border-radius: 5px 5px 11px 11px !important;
+  background: repeating-linear-gradient(90deg, #f1e8d1 0 20px, #eee2c5 21px 42px) !important;
+  box-shadow: inset 0 8px 15px #4c4c4c26;
+}
+.briefcase-plate {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: 2px solid #6d7080;
+  background: #f7ead0;
+  color: #4e5871;
+  font:
+    8px "Press Start 2P",
+    monospace;
+  z-index: 3;
+  white-space: nowrap;
+}
+#starter-scene-overlay .pokeball-wrapper {
+  width: 100% !important;
+  height: 105px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  transform: none !important;
+  filter: none !important;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 2px;
+  appearance: none;
+}
+#starter-scene-overlay .pokeball-wrapper::after {
+  display: none !important;
+}
+#starter-scene-overlay .pokeball-wrapper:focus-visible,
+#starter-scene-overlay .pokeball-wrapper:hover {
+  border-color: #cc845e;
+  background: #fff6e67a;
+}
+#starter-scene-overlay .pokeball-wrapper.open {
+  border-color: #c85039;
+  background: #ffe8bd;
+  box-shadow: inset 0 0 0 2px #fff3d1;
+}
+.ball-pad {
+  width: 72px;
+  height: 13px;
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #70869b4b, #768a9836 65%, transparent 70%);
+  z-index: 0;
+}
+.ball-model .pokeball-top,
+.ball-model .pokeball-bottom {
+  width: 60px;
+  height: 30px;
+  border-width: 3px;
+}
+.ball-model .pokeball-top {
+  border-radius: 32px 32px 0 0;
+}
+.ball-model .pokeball-bottom {
+  border-radius: 0 0 32px 32px;
+}
+.ball-model .pokeball-button {
+  width: 20px;
+  height: 20px;
+}
+#starter-scene-overlay .starter-name {
+  font:
+    8px "Press Start 2P",
+    monospace;
+  color: #2c4567;
+  white-space: nowrap;
+}
+#starter-scene-overlay .starter-kind {
+  font:
+    8px "Press Start 2P",
+    monospace;
+  color: #7e7164;
+  white-space: nowrap;
+}
+#starter-scene-overlay .pokeball-wrapper.open .pokeball-top {
+  transform: translateY(-13px) rotate(-12deg);
+}
+#starter-scene-overlay .pokeball-wrapper.open .pokeball-bottom {
+  transform: translateY(5px);
+}
+.starter-preview-strip {
+  width: min(100%, 500px);
+  height: 66px;
+  min-height: 66px;
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  padding: 6px 12px;
+  border: 3px solid #637c9b;
+  border-radius: 10px;
+  background: linear-gradient(#eff6f7, #cee1ea);
+  box-shadow: 0 4px 0 #6d7c88;
+}
+#starter-scene-overlay .pokemon-showcase-box {
+  position: relative;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  opacity: 0 !important;
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 9px;
+  margin: 0;
+  flex: 0 0 58px;
+  border: 2px solid #f6f3db;
+  box-shadow: 0 2px 5px #2a4d6780;
+}
+#starter-scene-overlay .pokemon-showcase-box.active {
+  opacity: 1 !important;
+  transform: none !important;
+}
+#starter-scene-overlay .pokemon-showcase-img {
+  width: 52px !important;
+  height: 52px !important;
+}
+#starter-scene-overlay > div:last-child {
+  background: #f5f0dc !important;
+  border: 3px solid #70849b;
+  max-width: 100%;
+  border-radius: 9px;
+  margin: 0;
+  padding: 9px;
+  box-shadow: 0 3px #7b90a8;
+}
+#starter-scene-overlay #dialog-text {
+  font-size: 8px;
+  color: #354861;
+}
+#starter-scene-overlay #dialog-actions {
+  margin-top: 7px;
+}
+#starter-scene-overlay #dialog-actions button {
+  font-size: 8px;
+  min-height: 27px;
+}
+@media (max-width: 760px) {
+  #starter-scene-overlay {
+    padding: 7px !important;
+    gap: 4px !important;
+  }
+  #starter-scene-overlay .briefcase-container {
+    height: 180px !important;
+  }
+  #starter-scene-overlay .briefcase-lid {
+    height: 49px;
+  }
+  #starter-scene-overlay .briefcase-inner {
+    min-height: 100px !important;
+    height: 100px !important;
+    padding: 3px !important;
+  }
+  #starter-scene-overlay .pokeball-wrapper {
+    height: 87px !important;
+  }
+  #starter-scene-overlay .starter-kind {
+    font-size: 8px;
+  }
+  .starter-preview-strip {
+    height: 54px;
+    min-height: 54px;
+  }
+  #starter-scene-overlay .pokemon-showcase-box {
+    width: 46px !important;
+    height: 46px !important;
+    flex-basis: 46px;
+  }
+  #starter-scene-overlay .pokemon-showcase-img {
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+#starter-scene-overlay .starter-name {
+  font-size: 8px;
+}
+#starter-selection-info {
+  font:
+    8px/1.9 "Press Start 2P",
+    monospace;
+  color: #375779;
+  flex: 1;
+  text-align: left;
+  font-size: 8px;
+}
+#starter-scene-overlay .pokeball-wrapper .ball-model {
+  position: relative;
+  display: block !important;
+  flex: none;
+  width: 62px !important;
+  height: 62px !important;
+  aspect-ratio: 1/1;
+  margin: 0 auto 5px;
+  border-radius: 50%;
+  background: url("../assets/sprites/items/pokeball.png") center/contain no-repeat !important;
+  transform: none !important;
+  filter: drop-shadow(0 4px 2px rgba(34, 42, 49, 0.3)) !important;
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease;
+  pointer-events: none;
+}
+#starter-scene-overlay .ball-model .pokeball-top,
+#starter-scene-overlay .ball-model .pokeball-bottom,
+#starter-scene-overlay .ball-model .pokeball-button {
+  display: none !important;
+}
+#starter-scene-overlay .pokeball-wrapper .ball-pad {
+  left: 50%;
+  top: 68px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+#starter-scene-overlay .pokeball-wrapper.open .ball-model {
+  transform: translateY(-4px) scale(1.05) !important;
+  filter: drop-shadow(0 3px 6px rgba(196, 83, 48, 0.5)) brightness(1.06) !important;
+}
+#starter-scene-overlay .pokeball-wrapper:hover .ball-model {
+  filter: drop-shadow(0 3px 7px #c78b54) !important;
+}
+#starter-scene-overlay .pokeball-wrapper > * {
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  #starter-scene-overlay .pokeball-wrapper .ball-model {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  #starter-scene-overlay .pokeball-wrapper .ball-pad {
+    top: 55px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #starter-scene-overlay .pokeball-wrapper .ball-model {
+    transition: none !important;
+  }
+}
+.finale-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 260;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 22px 25px;
+  text-align: center;
+  background: radial-gradient(ellipse at 48% 27%, #293f74 0%, #142953 37%, #071127 88%);
+  color: #fff0cc;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.finale-screen.hidden {
+  display: none !important;
+}
+#victory-overlay .finale-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.44;
+  background-image: radial-gradient(#fbe8a7 1px, transparent 2px), radial-gradient(#fff 1px, transparent 2px);
+  background-size:
+    74px 71px,
+    119px 123px;
+  background-position:
+    17px 30px,
+    41px 19px;
+}
+.finale-kicker,
+.finale-screen h2,
+.finale-screen p,
+.finale-actions,
+.finale-medal-preview {
+  position: relative;
+  z-index: 1;
+}
+.finale-kicker {
+  color: #83d9ec;
+  font-size: 8px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+#victory-title {
+  font:
+    12px/1.75 "Press Start 2P",
+    monospace;
+  max-width: 96%;
+  color: #ffe29c;
+  text-shadow:
+    0 3px #863c57,
+    0 0 15px rgba(255, 227, 152, 0.29);
+}
+#victory-title span {
+  display: block;
+  font-size: 10px;
+  color: #fff5df;
+  margin-top: 9px;
+}
+#victory-overlay > p {
+  font-size: 8px;
+  line-height: 2;
+  color: #e0eaff;
+  max-width: 440px;
+}
+.finale-medal-preview {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 7px;
+  max-width: 390px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid #a6b8d462;
+}
+.finale-medal-preview img {
+  width: 100%;
+  height: 32px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 2px #0007);
+}
+.finale-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  margin-top: 6px;
+}
+.finale-button {
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  cursor: pointer;
+  text-align: center;
+  min-height: 37px;
+  padding: 10px 12px;
+  border: 2px solid #fbe5be;
+  border-radius: 8px;
+  box-shadow: 0 4px #0007;
+  color: #fff8e9;
+  background: #385d8e;
+  transition:
+    filter 0.18s ease,
+    transform 0.18s ease;
+}
+.finale-button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+.finale-button:focus-visible {
+  outline: 3px solid #55daff;
+  outline-offset: 3px;
+}
+.finale-actions .finale-button {
+  width: min(100%, 340px);
+}
+.finale-button.primary {
+  background: linear-gradient(#d96550, #b6333f);
+}
+.finale-button.secondary {
+  background: linear-gradient(#527398, #274a73);
+}
+#memory-photo-overlay {
+  padding: 10px 15px;
+  gap: 8px;
+  background: #081324;
+  justify-content: center;
+}
+.memory-photo-card {
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 510px;
+  max-height: calc(100% - 52px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 12px 13px 11px;
+  border-radius: 12px;
+}
+.memory-photo-head {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+.memory-photo-head p {
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+}
+.memory-photo-team {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.memory-mon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 2px;
+  min-width: 0;
+  min-height: 74px;
+  border-radius: 7px;
+}
+.memory-mon.empty {
+  opacity: 0.34;
+  background: #e3d2ae;
+}
+.memory-mon img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.memory-mon strong {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+}
+.memory-mon span {
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+}
+.memory-photo-badges {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 3px;
+  align-items: start;
+}
+.memory-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+.memory-badge img {
+  width: 100%;
+  max-width: 34px;
+  height: 33px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.memory-badge span {
+  font:
+    8px/1.4 "Press Start 2P",
+    monospace;
+  overflow-wrap: anywhere;
+}
+.memory-photo-footer {
+  font:
+    8px/1.7 "Press Start 2P",
+    monospace;
+  padding-top: 8px;
+}
+.photo-back {
+  min-height: 31px;
+  flex: none;
+  padding: 6px 12px;
+}
+@media (max-width: 760px) {
+  .finale-screen {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  #victory-title {
+    font-size: 10px;
+  }
+  #victory-title span {
+    font-size: 8px;
+  }
+  #victory-overlay > p {
+    font-size: 8px;
+  }
+  .memory-photo-card {
+    padding: 8px 9px;
+    gap: 5px;
+  }
+  .memory-mon {
+    min-height: 60px;
+  }
+  .memory-mon img {
+    width: 36px;
+    height: 36px;
+  }
+  .memory-photo-footer {
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .finale-button {
+    transition: none !important;
+  }
+}
+#main-menu-overlay:before {
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  opacity: 0.24;
+  background:
+    radial-gradient(circle at 18% 35%, #58cbbf 0 8px, transparent 10px), radial-gradient(circle at 78% 63%, #e7ba56 0 6px, transparent 8px),
+    repeating-linear-gradient(125deg, transparent 0 23px, #6bddab1a 24px 25px, transparent 27px 48px);
+}
+#main-menu-overlay > * {
+  position: relative;
+  z-index: 1;
+}
+#main-menu-overlay .logo-title {
+  font-size: clamp(15px, 4vw, 24px);
+  color: #ffe79e;
+  text-shadow:
+    3px 3px #284578,
+    0 0 14px #28749b;
+  letter-spacing: 1px;
+}
+#main-menu-overlay .menu-card {
+  max-width: 95%;
+  width: min(350px, 94%);
+  background: #09152dd9;
+  box-shadow:
+    0 0 0 4px #77d1ff22,
+    0 12px 30px #0008;
+}
+#main-menu-overlay #btn-start-game {
+  padding: 15px 18px !important;
+  font-size: 9px !important;
+}
+@media (max-width: 620px) {
+  #main-menu-overlay #btn-start-game {
+    font-size: 8px !important;
+  }
+  #main-menu-overlay .logo-title {
+    font-size: 15px;
+  }
+}
+.trainer-choice {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  color: #f9edcf;
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  margin: 5px auto 8px;
+  z-index: 16;
+}
+.trainer-choice span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 8px;
+}
+.trainer-choice button {
+  background: #edf1e9;
+  color: #28415a;
+  border: 3px solid #748da1;
+  font:
+    8px/1.4 "Press Start 2P",
+    monospace;
+  min-height: 32px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+.trainer-choice button.selected,
+.trainer-choice button[aria-pressed="true"] {
+  background: #ffdc83;
+  border-color: #d87c45;
+  box-shadow: 0 3px 0 #8e5431;
+}
+@media (max-width: 620px) {
+  .trainer-choice {
+    gap: 5px;
+    margin: 0 auto 4px;
+  }
+  .trainer-choice button {
+    font-size: 8px;
+    padding: 5px 8px;
+    min-height: 30px;
+  }
+}
+#gameover-overlay:not(.hidden) {
+  display: flex !important;
+}
+.memory-photo-card {
+  background: linear-gradient(145deg, #142944 0%, #0c1c34 55%, #09152a 100%) !important;
+  border: 3px solid #3685ba;
+  color: #e1efff;
+  box-shadow:
+    inset 0 0 0 2px #64bbed66,
+    0 12px 28px #000b,
+    0 0 36px #2c8bd548;
+}
+.memory-photo-tag {
+  font-size: 8px;
+  line-height: 1.4;
+  color: #78c7eb;
+}
+#memory-photo-title {
+  font:
+    11px/1.5 "Press Start 2P",
+    monospace;
+  color: #b8eaff;
+  text-shadow: 0 0 12px #1a8cdb;
+}
+.memory-photo-head p {
+  color: #a3c9e8;
+}
+.memory-photo-subtitle {
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  color: #e4cf8d;
+}
+.memory-mon {
+  background: linear-gradient(#1d3558, #0e203e) !important;
+  border: 2px solid #43688a;
+  color: #e3f3ff;
+}
+.memory-mon.empty {
+  background: #142640 !important;
+}
+.memory-mon span {
+  color: #a0cee9;
+}
+.memory-badge span {
+  color: #b4cce6;
+}
+.memory-photo-footer {
+  color: #8fd5f5;
+  border-top: 2px solid #376b91;
+}
+.main-menu-actions {
+  display: grid !important;
+  gap: 8px;
+  padding: 15px !important;
+}
+.main-menu-actions .btn-nav {
+  min-height: 43px !important;
+  font-size: clamp(8px, 0.85vw, 8px);
+  padding: 10px 8px;
+}
+.main-menu-actions .btn-nav[disabled] {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+.menu-subdialog {
+  inset: 20% 6%;
+  border: 3px solid #75d5ff;
+  border-radius: 12px;
+  background: #07162cee;
+  color: #f4f8ff;
+  padding: 24px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  font:
+    8px/1.9 "Press Start 2P",
+    monospace;
+}
+.menu-message-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+}
+.menu-message-buttons .btn-nav {
+  width: auto !important;
+  min-width: 65px;
+  font-size: 8px;
+}
+#login-gate {
+  position: absolute;
+  inset: 0;
+  z-index: 220;
+  place-items: center;
+  background: #071324ed;
+  padding: 12px;
+}
+#login-gate.hidden {
+  display: none !important;
+}
+.save-status {
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  color: #92d9f1;
+  margin: 0 0 4px;
+  min-height: 11px;
+}
+#login-gate .login-guest-btn:hover {
+  filter: brightness(1.1);
+}
+#pokenav-screen-root #login-gate:not(.hidden) {
+  position: absolute;
+  inset: 0;
+  z-index: 220;
+  display: block !important;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #08172a !important;
+}
+#login-gate .login-gate-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(5px, 1.7vh, 12px);
+  height: 100%;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: clamp(12px, 3.5%, 23px);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: center;
+  color: #e7f5ff;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  background: radial-gradient(ellipse 90% 70% at 50% 24%, #164369 0%, #102841 47%, #08192f 100%) !important;
+}
+#login-gate .login-gate-card::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: 9px;
+  border: 2px solid #39779d70;
+  border-radius: 9px;
+}
+#login-gate .login-gate-card > * {
+  position: relative;
+  z-index: 1;
+}
+#login-gate .login-gate-topline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-bottom: 2px solid #3c7998;
+  font:
+    clamp(8px, 0.8vw, 8px)/1.6 "Press Start 2P",
+    monospace;
+  color: #9fdafa;
+  letter-spacing: 0.2px;
+}
+#login-gate .login-gate-led {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  background: #4ad9b4;
+  box-shadow:
+    0 0 0 2px #153949,
+    0 0 9px #27cfa5;
+}
+#login-gate .login-gate-topline-dot {
+  color: #f4d18f;
+  font-size: 8px;
+}
+#login-gate .login-gate-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(5px, 1.3vh, 10px);
+  min-height: 0;
+  flex: 0 1 auto;
+}
+#login-gate .login-gate-ball {
+  display: block;
+  position: relative;
+  width: clamp(25px, 5vh, 43px);
+  height: clamp(25px, 5vh, 43px);
+  border: 3px solid #0c1521;
+  border-radius: 50%;
+  background: linear-gradient(#ed584f 0 43%, #172437 43% 56%, #f6f3dd 56% 100%);
+  box-shadow:
+    0 3px 0 #08121f,
+    0 0 14px #5aaedf55;
+}
+#login-gate .login-gate-ball::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 28%;
+  height: 28%;
+  background: #eff7ff;
+  border: 3px solid #152337;
+  border-radius: 50%;
+}
+#login-gate .login-gate-brand h2 {
+  font:
+    clamp(12px, 2.6vw, 19px)/1.45 "Press Start 2P",
+    monospace;
+  margin: 0;
+  color: #ffe6a2;
+  text-shadow: 2px 3px 0 #61453d;
+  letter-spacing: 0.3px;
+}
+#login-gate .login-gate-brand-sub {
+  font:
+    clamp(8px, 0.72vw, 8px)/1.6 "Press Start 2P",
+    monospace;
+  color: #73dce8;
+}
+#login-gate .login-gate-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(6px, 1.6vh, 12px);
+  padding: clamp(9px, 2.5%, 15px);
+  border: 3px solid #448eae;
+  border-radius: 9px;
+  background: #071a30b8;
+  box-shadow:
+    inset 0 0 0 2px #142e48,
+    0 5px 0 #071322;
+}
+#login-gate #login-gate-description {
+  font:
+    clamp(8px, 0.95vw, 9px)/1.8 "Press Start 2P",
+    monospace;
+  margin: 0;
+  color: #dceafa;
+}
+#login-gate #login-discord-btn,
+#login-gate #login-guest-btn {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: clamp(34px, 5.5vh, 48px);
+  margin: 0;
+  border: 2px solid #8bdfff;
+  border-radius: 5px;
+  padding: 10px 7px;
+  font:
+    clamp(8px, 0.9vw, 9px)/1.55 "Press Start 2P",
+    monospace;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    filter 0.12s,
+    transform 0.12s;
+}
+#login-gate #login-discord-btn {
+  background: linear-gradient(#3cbbec, #176caa) !important;
+  color: #fff;
+  box-shadow: 0 3px 0 #08446c;
+}
+#login-gate #login-guest-btn {
+  background: linear-gradient(#536b83, #2d455d) !important;
+  border-color: #779cb6 !important;
+  color: #fff;
+  box-shadow: 0 3px 0 #14273c;
+}
+#login-gate #login-discord-btn:hover:not(:disabled),
+#login-gate #login-guest-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+#login-gate #login-discord-btn:active:not(:disabled),
+#login-gate #login-guest-btn:active:not(:disabled) {
+  transform: translateY(2px);
+}
+#login-gate .login-gate-separator {
+  height: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #8eb9cc;
+  font:
+    8px/1 "Press Start 2P",
+    monospace;
+}
+#login-gate .login-gate-separator::before,
+#login-gate .login-gate-separator::after {
+  content: "";
+  height: 1px;
+  background: #43647e;
+  flex: 1;
+}
+#login-gate .login-guest-note {
+  font:
+    clamp(8px, 0.75vw, 8px)/1.7 "Press Start 2P",
+    monospace;
+  color: #c1d2e1;
+  margin: 0;
+}
+#login-gate .login-gate-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+#login-gate #login-gate-status {
+  font:
+    clamp(8px, 0.75vw, 8px)/1.6 "Press Start 2P",
+    monospace;
+  color: #f7d89a;
+  margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+#login-gate #login-gate-status:empty {
+  display: none;
+}
+#login-gate .login-gate-footer a {
+  font:
+    clamp(8px, 0.9vw, 9px)/1.5 "Press Start 2P",
+    monospace;
+  color: #a5e8fa;
+  text-underline-offset: 3px;
+}
+#login-gate #login-gate-error-details {
+  width: 100%;
+  max-width: 100%;
+  color: #bcd2df;
+  font: 8px/1.5 monospace;
+  text-align: left;
+}
+#login-gate #login-gate-error-details summary {
+  cursor: pointer;
+  color: #84b6ce;
+  font-size: 8px;
+}
+#login-gate #login-gate-error-code {
+  overflow-wrap: anywhere;
+  font: 8px/1.5 monospace;
+  margin: 5px 0 0;
+  color: #d9e6f1;
+}
+#login-gate #login-discord-btn:focus-visible,
+#login-gate #login-guest-btn:focus-visible,
+#login-gate a:focus-visible {
+  outline: 3px solid #ffe29b;
+  outline-offset: 3px;
+}
+@media (max-height: 560px) {
+  #login-gate .login-gate-card {
+    gap: 5px;
+    padding: 9px 12px !important;
+  }
+  #login-gate .login-gate-brand {
+    gap: 4px;
+  }
+  #login-gate .login-gate-ball {
+    width: 24px;
+    height: 24px;
+  }
+  #login-gate .login-gate-actions {
+    gap: 6px;
+    padding: 8px;
+  }
+  #login-gate #login-discord-btn,
+  #login-gate #login-guest-btn {
+    min-height: 33px;
+    padding: 7px !important;
+  }
+}
+.beta-version-label {
+  margin-top: 5px;
+  color: #77e0d7;
+  font:
+    8px/1.5 "Press Start 2P",
+    monospace;
+  letter-spacing: 2px;
+  text-align: center;
+}
+#main-menu-overlay {
+  isolation: isolate;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 32%, #204767 0%, #0c213a 55%, #041224 100%) !important;
+}
+#main-menu-overlay::before {
+  display: none !important;
+  content: none;
+}
+#objectives-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  background: #020b1bde;
+  box-sizing: border-box;
+}
+#objectives-overlay.hidden {
+  display: none !important;
+}
+.objectives-card {
+  width: min(100%, 555px);
+  max-height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 13px;
+  background: #0c223c;
+  border: 3px solid #68b8df;
+  border-radius: 11px;
+  box-shadow: 0 5px 25px #000b;
+  color: #e5f7ff;
+}
+.objectives-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.objectives-header h2 {
+  font:
+    clamp(11px, 1.4vw, 16px)/1.4 "Press Start 2P",
+    monospace;
+  color: #ffe3a6;
+  margin: 0;
+}
+#objectives-close {
+  border: 2px solid #65c5e8;
+  background: #18354f;
+  color: #fff;
+  font-size: 17px;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.objectives-counters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+.objectives-counters > div {
+  min-width: 0;
+  border: 1px solid #397da3;
+  border-radius: 7px;
+  background: #163a56;
+  padding: 9px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  text-align: center;
+}
+.objectives-counters small {
+  font:
+    clamp(8px, 0.6vw, 8px)/1.8 "Press Start 2P",
+    monospace;
+  color: #acd9ef;
+}
+.objectives-counters strong {
+  font:
+    clamp(11px, 1.6vw, 20px) "Press Start 2P",
+    monospace;
+  color: #ffdf8f;
+}
+#objectives-cloud {
+  font:
+    8px/1.6 "Press Start 2P",
+    monospace;
+  color: #8bbdd6;
+  margin: 0;
+}
+.objectives-quests {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-color: #427eae #0a253e;
+}
+.objective-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 9px;
+  padding: 8px;
+  border-radius: 7px;
+  border: 2px solid #406c92;
+  background: #112e49;
+  min-height: 72px;
+  box-sizing: border-box;
+}
+.objective-entry.done {
+  background: #173c35;
+  border-color: #4ed482;
+  box-shadow: inset 0 0 0 1px #153d2e;
+}
+.objective-entry-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+.objective-entry-text strong {
+  color: #fff0c3;
+  font:
+    clamp(8px, 0.8vw, 8px)/1.6 "Press Start 2P",
+    monospace;
+}
+.objective-entry-text p {
+  margin: 0;
+  color: #afcee2;
+  font:
+    clamp(8px, 0.65vw, 8px)/1.5 "Press Start 2P",
+    monospace;
+}
+.objective-entry-text small {
+  color: #76b9e9;
+  font:
+    8px "Press Start 2P",
+    monospace;
+}
+.objective-entry.done .objective-entry-text small {
+  color: #91f4ac;
+}
+.objective-entry-art {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex: none;
+}
+.objective-entry-art.locked {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(98%) saturate(1136%) hue-rotate(168deg) brightness(108%);
+  opacity: 0.89;
+}
+#objectives-bottom-close {
+  flex: none;
+  margin: 0;
+  font-size: 8px;
+}
+@media (max-width: 560px) {
+  .objectives-card {
+    padding: 8px;
+    gap: 6px;
+  }
+  .objective-entry {
+    min-height: 62px;
+    padding: 6px;
+  }
+  .objective-entry-art {
+    width: 40px;
+    height: 40px;
+  }
+  .objectives-counters > div {
+    padding: 8px 2px;
+  }
+  .objectives-quests {
+    gap: 4px;
+  }
+}
+#choose-champion:disabled {
+  opacity: 0.49;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+#choose-champion:not(:disabled) {
+  border-color: #d3ae50;
+  background: #f7e1a0;
+}
+
+/* ---------------------------------------------------------------- Beta 2.0 */
+
+/* Messaggio di caricamento, finché i dati di gioco non sono pronti. */
+.boot-status {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  background: #0b1730;
+  color: #cfe8ff;
+  font: 10px/1.8 "Press Start 2P", monospace;
+  text-align: center;
+}
+
+/* Titolo del menu principale: logo, versione e sottotitolo impilati. */
+#main-menu-overlay .main-menu-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+.main-menu-tagline {
+  color: #5eead4;
+  font: 8px/1.6 "Press Start 2P", monospace;
+  letter-spacing: 1px;
+}
+#main-menu-overlay .btn-nav.btn-nav-quiet {
+  background: #1d3557;
+  color: #d6e6ff;
+  box-shadow: 0 4px 0 #0c1a30;
+}
+
+/* Pulsanti secondari usati in più schermate. */
+.btn-nav.btn-danger {
+  background: #ef4444;
+  color: #fff;
+  box-shadow: 0 4px 0 #991b1b;
+}
+.btn-nav.btn-quiet {
+  background: #64748b;
+  color: #f8fafc;
+  box-shadow: 0 4px 0 #334155;
+}
+
+/* Scelta dello starter. */
+#starter-scene-overlay .starter-title {
+  margin-top: 5px;
+  color: #233b5d;
+  font-size: 10px;
+  text-shadow: 0 1px #fff9;
+}
+#starter-scene-overlay .starter-dialog {
+  width: 100%;
+  max-width: 440px;
+  z-index: 15;
+}
+#starter-scene-overlay #dialog-text {
+  line-height: 1.6;
+}
+#starter-scene-overlay #dialog-actions:not(.hidden) {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+#starter-scene-overlay #dialog-actions .btn-nav {
+  width: auto;
+  padding: 6px 16px;
+}
+
+/* Fine dell'avventura. */
+#gameover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 40%, #2a0d16 0%, #0b0610 70%);
+}
+.gameover-title {
+  margin: 0;
+  color: #ff6b62;
+  font: 18px/1.5 "Press Start 2P", monospace;
+  text-shadow: 3px 3px 0 #000;
+}
+.gameover-text {
+  max-width: 36ch;
+  margin: 0;
+  color: #cbd5e1;
+  font: 9px/1.9 "Press Start 2P", monospace;
+}
+#gameover-overlay #btn-return-main-menu {
+  width: auto;
+  padding: 12px 24px;
+}
+
+/* Schermi bassi (1366×768 e simili): il menu principale entra tutto senza scorrere. */
+@media (max-height: 820px) and (min-width: 761px) {
+  #main-menu-overlay {
+    padding-block: 12px;
+  }
+  #main-menu-overlay .main-menu-actions .btn-nav {
+    padding: 8px;
+  }
+  #main-menu-overlay .main-menu-actions #btn-start-game {
+    padding: 11px 18px !important; /* il pulsante principale ha già un padding !important */
+  }
+}
+
+/* Modalità della run (Nuzlocke o Normale) nella scelta dello starter. */
+#starter-scene-overlay .mode-choice {
+  margin-top: -2px;
+}
+
+/* Riepilogo della run (game over e finale). */
+#gameover-overlay {
+  overflow-y: auto;
+  justify-content: flex-start;
+  padding-top: 28px;
+}
+.run-recap {
+  width: 100%;
+  max-width: 460px;
+  text-align: left;
+  font: 8px/1.6 "Press Start 2P", monospace;
+  color: #dbe7f5;
+}
+.run-recap:empty {
+  display: none;
+}
+.run-recap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+.run-recap-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px 9px;
+  border: 2px solid #31476a;
+  border-radius: 6px;
+  background: #0f1a30;
+}
+.run-recap-stat span {
+  color: #8fa8c8;
+}
+.run-recap-stat strong {
+  color: #ffd474;
+  font-size: 10px;
+}
+.run-recap h3 {
+  margin: 12px 0 6px;
+  color: #ff8f86;
+  font: 8px/1.5 "Press Start 2P", monospace;
+}
+.run-recap-fallen {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.run-recap-fallen li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #1a1220;
+}
+.run-recap-fallen img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  filter: grayscale(0.6);
+}
+.run-recap-more,
+.run-recap-mode {
+  margin: 8px 0 0;
+  color: #8fa8c8;
+  text-align: center;
+}
+.run-recap-mode {
+  margin: 0 0 8px;
+  color: #7ee0a1;
+}
+#victory-overlay .run-recap {
+  max-width: 520px;
+  margin: 8px auto;
+}
+#victory-overlay .run-recap-fallen {
+  max-height: 90px;
+  overflow-y: auto;
+}
+
+/* Schermi bassi: l'anteprima dello starter scelto è già nel messaggio di conferma,
+   così titolo, personaggio e modalità restano visibili insieme alla valigetta. */
+@media (max-height: 820px) and (min-width: 761px) {
+  #starter-scene-overlay .starter-preview-strip {
+    display: none;
+  }
+}
+@media (max-height: 820px) and (min-width: 761px) {
+  /* Etichetta accanto ai pulsanti invece che sopra: una riga in meno per gruppo. */
+  #starter-scene-overlay .trainer-choice {
+    margin: 3px auto 5px;
+  }
+  #starter-scene-overlay .trainer-choice span {
+    width: auto;
+    margin-right: 4px;
+  }
+}
+#starter-scene-overlay .trainer-choice span {
+  color: #4a2f17;
+}

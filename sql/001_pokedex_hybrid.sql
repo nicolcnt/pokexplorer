@@ -168,7 +168,7 @@ begin
     first_caught_context = case
       when ds.first_caught_at is null then excluded.first_caught_context
       when excluded.first_caught_at is not null
-        and excluded.first_caught_at is not null
+        and ds.first_caught_at is not null
         and excluded.first_caught_at < ds.first_caught_at
       then excluded.first_caught_context
       else coalesce(ds.first_caught_context, excluded.first_caught_context) end,
@@ -192,7 +192,7 @@ begin
     first_caught_context = case
       when dv.first_caught_at is null then excluded.first_caught_context
       when excluded.first_caught_at is not null
-        and excluded.first_caught_at is not null
+        and dv.first_caught_at is not null
         and excluded.first_caught_at < dv.first_caught_at
       then excluded.first_caught_context
       else coalesce(dv.first_caught_context, excluded.first_caught_context) end,

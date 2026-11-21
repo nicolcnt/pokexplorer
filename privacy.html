@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokéxplorer · Dati e privacy</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background: #0b1730; color: #dbe7f5; font: 16px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    main { max-width: 760px; margin: 0 auto; padding: 40px 22px 64px; }
+    h1 { color: #ffcf4a; font-size: 1.7rem; margin: 0 0 4px; }
+    h2 { color: #7dd3fc; font-size: 1.1rem; margin: 32px 0 8px; }
+    a { color: #7dd3fc; }
+    .note { background: #13284a; border-left: 4px solid #ffcf4a; padding: 12px 16px; border-radius: 6px; }
+    table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+    th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid #22406b; }
+    th { color: #9fb6d3; font-weight: 600; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Dati e privacy</h1>
+  <p>Pokéxplorer · fan game gratuito di 17nico · ultimo aggiornamento: novembre 2026</p>
+
+  <p class="note">Pokéxplorer non ha pubblicità, non vende nulla e non usa strumenti di analisi o di tracciamento.
+    I soli dati trattati sono quelli necessari per l’accesso con Discord e per conservare i progressi di gioco.</p>
+
+  <h2>Chi gestisce i dati</h2>
+  <p>Il gioco è gestito dal suo autore, <strong>17nico</strong>. Per qualsiasi richiesta sui tuoi dati puoi scrivere
+    sul <a href="https://discord.gg/qNGscTEYHM" target="_blank" rel="noopener noreferrer">server Discord di Pokéxplorer</a>.</p>
+
+  <h2>Quali dati e perché</h2>
+  <table>
+    <tr><th>Dato</th><th>A cosa serve</th><th>Dove viene conservato</th></tr>
+    <tr><td>Identificativo dell’account, nome e immagine del profilo Discord</td><td>Accedere e mostrare il tuo profilo nel gioco</td><td>Supabase (servizio di autenticazione e database del gioco)</td></tr>
+    <tr><td>Salvataggio della run, Pokédex, obiettivi raggiunti</td><td>Ritrovare i progressi su altri dispositivi</td><td>Supabase, collegati al tuo account</td></tr>
+    <tr><td>Salvataggio locale, sessione di accesso, volume e velocità</td><td>Far funzionare il gioco su questo browser</td><td>Memoria locale del browser (<code>localStorage</code>)</td></tr>
+  </table>
+  <p>Se giochi come <strong>Utente</strong>, senza accesso, nessun dato viene inviato: i progressi non vengono salvati.</p>
+
+  <h2>Servizi esterni</h2>
+  <ul>
+    <li><strong>Discord</strong>: gestisce l’accesso (OAuth). Pokéxplorer non riceve mai la tua password.</li>
+    <li><strong>Supabase</strong>: ospita l’autenticazione e i salvataggi.</li>
+    <li><strong>GitHub Pages</strong>: ospita le pagine del sito e può registrare dati tecnici di accesso (ad esempio l’indirizzo IP) secondo le proprie regole.</li>
+  </ul>
+
+  <h2>Per quanto tempo</h2>
+  <p>I dati restano finché l’account di gioco è attivo. Puoi chiederne la cancellazione in qualsiasi momento.</p>
+
+  <h2>I tuoi diritti</h2>
+  <p>Puoi chiedere di vedere, correggere o cancellare i tuoi dati scrivendo sul server Discord. Per eliminare i dati
+    salvati solo sul tuo dispositivo basta cancellare i dati del sito dalle impostazioni del browser; il pulsante
+    <em>Esci da Discord</em> chiude la sessione su questo browser.</p>
+
+  <p><a href="index.html">← Torna al gioco</a></p>
+</main>
+</body>
+</html>
