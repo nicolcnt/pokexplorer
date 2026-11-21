@@ -7201,15 +7201,52 @@ function redirectUrl(loc = globalThis.location) {
   return loc.origin + loc.pathname.replace(/\/index\.html$/, '/');
 }
 
+function allowedDiscordAvatar(value) {
+  if (typeof value !== 'string' || !value) return null;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && DISCORD_AVATAR_HOSTS.includes(url.hostname) ? url.href : null;
+  } catch { return null; }
+}
+
+/** Supabase può esporre i dati Discord nel profilo oppure nell'identità OAuth. */
 function profile(user) {
   const md = user?.user_metadata || {};
-  const name = String(md.full_name || md.name || md.user_name || md.preferred_username || 'ALLENATORE').trim().slice(0, 28);
-  let avatar = null;
-  try {
-    const url = new URL(md.avatar_url || '');
-    if (url.protocol === 'https:' && DISCORD_AVATAR_HOSTS.includes(url.hostname)) avatar = url.href;
-  } catch { /* avatar predefinito */ }
-  return { name, avatar };
+  const identity = user?.identities?.find(entry => entry.provider === 'discord');
+  const identityData = identity?.identity_data || {};
+  const name = String(md.full_name || md.name || md.user_name || md.preferred_username || identityData.full_name || identityData.name || identityData.user_name || 'ALLENATORE').trim().slice(0, 28);
+  const urls = [];
+  const add = candidate => {
+    const url = allowedDiscordAvatar(candidate);
+    if (url && !urls.includes(url)) urls.push(url);
+  };
+  for (const value of [md.avatar_url, md.picture, md.avatarUrl, identityData.avatar_url, identityData.picture, identityData.avatarUrl]) add(value);
+
+  // Se il provider passa solo ID Discord e hash dell'avatar, ricostruiamo l'URL.
+  // user.id è un UUID Supabase: NON è l'ID Discord.
+  const discordId = [identity?.provider_id, identityData.provider_id, identityData.sub, identityData.id, md.provider_id]
+    .find(value => /^[0-9]{15,22}$/.test(String(value || '')));
+  const hash = [identityData.avatar, identityData.avatar_hash, md.avatar, md.avatar_hash]
+    .find(value => typeof value === 'string' && /^[a-zA-Z0-9_]{10,128}$/.test(value));
+  if (discordId && hash) {
+    const extension = hash.startsWith('a_') ? 'gif' : 'png';
+    add(`https://cdn.discordapp.com/avatars/${discordId}/${hash}.${extension}?size=128`);
+  }
+  // Alcuni browser rifiutano il CDN principale: proviamo anche il media CDN Discord.
+  const primary = urls.slice();
+  for (const source of primary) {
+    const url = new URL(source);
+    if (url.hostname === 'cdn.discordapp.com' && url.pathname.startsWith('/avatars/')) {
+      url.hostname = 'media.discordapp.net';
+      add(url.href);
+    }
+  }
+  // L'avatar predefinito Discord è utile anche per gli account senza avatar personalizzato.
+  if (discordId) {
+    const index = Number((BigInt(discordId) >> 22n) % 6n);
+    add(`https://cdn.discordapp.com/embed/avatars/${index}.png`);
+  }
+  return { name, avatar: urls[0] || null, avatarFallbacks: urls.slice(1) };
 }
 
 function loadSdk() {
@@ -7513,11 +7550,17 @@ function bootGame() {
   return game;
 }
 
-function setProfile({ name, avatar }) {
+function setProfile({ name, avatar, avatarFallbacks = [] }) {
   $('trainer-discord-name').textContent = name;
   const img = $('trainer-discord-avatar');
-  img.onerror = () => { img.onerror = null; img.src = 'assets/sprites/ui/trainer-avatar-fallback.svg'; };
-  img.src = avatar || 'assets/sprites/ui/trainer-avatar-fallback.svg';
+  const fallback = 'assets/sprites/ui/trainer-avatar-fallback.svg';
+  const candidates = [avatar, ...avatarFallbacks].filter(Boolean);
+  img.referrerPolicy = 'no-referrer';
+  img.onerror = () => {
+    if (candidates.length) img.src = candidates.shift();
+    else { img.onerror = null; img.src = fallback; }
+  };
+  img.src = candidates.shift() || fallback;
 }
 
 function setLoginStatus(text, details = '') {
